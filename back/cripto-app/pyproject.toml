@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "cripto-app"
+version = "0.1.0"
+description = ""
+authors = ["BeguAlexandruU <alexandru.begu@student.tuiasi.ro>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["all"], version = "^0.110.0"}
+uvicorn = "^0.28.0"
+alembic = "^1.13.1"
+sqlalchemy = "^2.0.28"
+loguru = "^0.7.2"
+aiomysql = "^0.2.0"
+pydantic-settings = "^2.2.1"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

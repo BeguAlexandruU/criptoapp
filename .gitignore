@@ -1,0 +1,32 @@
+# Python
+pycache/
+*.py[cod]
+*.pyc
+.env
+.venv
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+.sphinx/
+.ipynb_checkpoints
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vite/
+dist/
+
+# Development environments
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
