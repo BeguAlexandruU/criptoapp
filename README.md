@@ -26,7 +26,7 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
     poetry run alembic init [migrations/alembic]
     ```
 
-    1.1 config file alembic.ini   
+    1. config file alembic.ini   
 
         - change line 63  
 
@@ -34,7 +34,7 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
         sqlalchemy.url = mysql+pymysql://%(MYSQL_USER)s:%(MYSQL_PASSWORD)s@%(MYSQL_HOST)s:%(MYSQL_PORT)s/%(MYSQL_DATABASE)s
         ```
 
-    1.2 config file env.py on migrations folder  
+    2. config file env.py on migrations folder  
         - add imports   
 
             ```
