@@ -29,17 +29,21 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
     1.1 config file alembic.ini
 
         - change line 63
+
         ```
         sqlalchemy.url = mysql+pymysql://%(MYSQL_USER)s:%(MYSQL_PASSWORD)s@%(MYSQL_HOST)s:%(MYSQL_PORT)s/%(MYSQL_DATABASE)s
         ```
 
     1.2 config file env.py on migrations folder
         - add imports 
+
             ```
             from cripto_app.settings import mysql_db, mysql_host, mysql_password, mysql_port, mysql_user
             from cripto_app.db.models import metadata
             ```
+
         - code after config variable declaration
+
             ```
             section = config.config_ini_section
             config.set_section_option(section, 'MYSQL_USER', mysql_user)
@@ -48,10 +52,13 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
             config.set_section_option(section, 'MYSQL_PORT', mysql_port)
             config.set_section_option(section, 'MYSQL_DATABASE', mysql_db)
             ```
+
         - change on line 33
+
             ```
             target_metadata = metadata
             ```
+
 ## Update database
 ### Before run update
 1. Clear folder /alembic/versions
