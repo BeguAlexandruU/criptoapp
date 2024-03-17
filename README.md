@@ -1,7 +1,7 @@
 
 # env
 
-Connect to app environment
+Connect to app environment  
 -- run in /cripto-app
 
 ```
@@ -21,21 +21,21 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
 ## init database
 -- run comanda in /cripto_app
 
-1. init alembic, run only on initializaton
+1.  init alembic, run only on initializaton  
     ```
     poetry run alembic init [migrations/alembic]
     ```
 
-    1.1 config file alembic.ini
+    1.1 config file alembic.ini   
 
-        - change line 63
+        - change line 63  
 
         ```
         sqlalchemy.url = mysql+pymysql://%(MYSQL_USER)s:%(MYSQL_PASSWORD)s@%(MYSQL_HOST)s:%(MYSQL_PORT)s/%(MYSQL_DATABASE)s
         ```
 
-    1.2 config file env.py on migrations folder
-        - add imports 
+    1.2 config file env.py on migrations folder  
+        - add imports   
 
             ```
             from cripto_app.settings import mysql_db, mysql_host, mysql_password, mysql_port, mysql_user
