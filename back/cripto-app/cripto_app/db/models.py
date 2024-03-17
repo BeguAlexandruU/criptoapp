@@ -13,7 +13,7 @@ class User(Base):
     token = Column(String(255))
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    children = relationship('Child', back_populates='User')
+    children = relationship('Child', back_populates='parent')
 
     def __init__(self, **kwargs):
         self.username = kwargs.get('username')
@@ -25,6 +25,7 @@ class Child(Base):
     id = Column(Integer, primary_key=True, index=True)
     id_user = Column(Integer, index=True)
     username = Column(String(255))
+
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 

@@ -1,6 +1,17 @@
+#env
+
+-- run in /cripto-app
+
+source env/bin/activate
+
+
+#run app
+
+poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
+
 #Database
 
---important /cripto_app
+--important run comanda in /cripto_app
 
 1. poetry run alembic init [migrations/alembic]
 1.1 config file alembic.ini
@@ -21,6 +32,7 @@
     - line 33
         target_metadata = metadata
 
+//after update
 2. poetry run alembic revision --autogenerate -m 'migration name'
 
 3. poetry run alembic upgrade head[/id last revision]
@@ -28,4 +40,3 @@
 --secondary
 4. poetry run alembic downgrade id_lasr_revisino
 5. poetry run alembic history //the rest on alembic.com
-
