@@ -26,38 +26,37 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
     poetry run alembic init [migrations/alembic]
     ```
 
-    1. config file alembic.ini   
+2. config file alembic.ini   
 
-        - change line 63  
+    - change line 63  
+
+    ```
+    sqlalchemy.url = mysql+pymysql://%(MYSQL_USER)s:%(MYSQL_PASSWORD)s@%(MYSQL_HOST)s:%(MYSQL_PORT)s/%(MYSQL_DATABASE)s
+    ```
+
+3. config file env.py on migrations folder  
+    - add imports   
 
         ```
-        sqlalchemy.url = mysql+pymysql://%(MYSQL_USER)s:%(MYSQL_PASSWORD)s@%(MYSQL_HOST)s:%(MYSQL_PORT)s/%(MYSQL_DATABASE)s
+        from cripto_app.settings import mysql_db, mysql_host, mysql_password, mysql_port, mysql_user
+        from cripto_app.db.models import metadata
         ```
 
-    2. config file env.py on migrations folder  
-        - add imports   
+    - code after config variable declaration
 
-            ```
-            from cripto_app.settings import mysql_db, mysql_host, mysql_password, mysql_port, mysql_user
-            from cripto_app.db.models import metadata
-            ```
+        ```
+        section = config.config_ini_section
+        config.set_section_option(section, 'MYSQL_USER', mysql_user)
+        config.set_section_option(section, 'MYSQL_PASSWORD', mysql_password)
+        config.set_section_option(section, 'MYSQL_HOST', mysql_host)
+        config.set_section_option(section, 'MYSQL_PORT', mysql_port)
+        config.set_section_option(section, 'MYSQL_DATABASE', mysql_db)
+        ```
 
-        - code after config variable declaration
-
-            ```
-            section = config.config_ini_section
-            config.set_section_option(section, 'MYSQL_USER', mysql_user)
-            config.set_section_option(section, 'MYSQL_PASSWORD', mysql_password)
-            config.set_section_option(section, 'MYSQL_HOST', mysql_host)
-            config.set_section_option(section, 'MYSQL_PORT', mysql_port)
-            config.set_section_option(section, 'MYSQL_DATABASE', mysql_db)
-            ```
-
-        - change on line 33
-
-            ```
-            target_metadata = metadata
-            ```
+    - change on line 33
+        ```
+        target_metadata = metadata
+        ```
 
 ## Update database
 ### Before run update
@@ -76,11 +75,11 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
     ```
 
 ## Secondary
-1. 
+1.   
     ```
     poetry run alembic downgrade id_lasr_revisino
     ```
-2. 
+2.   
     ```
     poetry run alembic history //the rest on alembic.com
     ```
