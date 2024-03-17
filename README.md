@@ -1,15 +1,17 @@
-#env
+
+# env
 
 -- run in /cripto-app
 
 source env/bin/activate
 
 
-#run app
+# run app
 
 poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
 
-#Database
+ls
+# Database
 
 --important run comanda in /cripto_app
 
