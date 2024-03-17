@@ -16,9 +16,10 @@ ls
 --important run comanda in /cripto_app
 
 1. init alembic, run only on initializaton
-```
-poetry run alembic init [migrations/alembic]
-```
+    ```
+    poetry run alembic init [migrations/alembic]
+    ```
+    
     1.1 config file alembic.ini
         change line 63
         sqlalchemy.url = mysql+pymysql://%(MYSQL_USER)s:%(MYSQL_PASSWORD)s@%(MYSQL_HOST)s:%(MYSQL_PORT)s/%(MYSQL_DATABASE)s
