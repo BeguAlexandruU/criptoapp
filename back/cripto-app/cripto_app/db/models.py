@@ -11,9 +11,9 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(255))
     token = Column(String(255))
+    
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    children = relationship('Child', back_populates='parent')
 
     def __init__(self, **kwargs):
         self.username = kwargs.get('username')
@@ -23,7 +23,7 @@ class Child(Base):
     __tablename__ = 'child'
     metadata = metadata
     id = Column(Integer, primary_key=True, index=True)
-    id_user = Column(Integer, index=True)
+    id_user = Column(Integer, ForeignKey('users.id', ondelete= 'CASCADE'), nullable=False)  
     username = Column(String(255))
 
     created_at = Column(DateTime, default=datetime.now)

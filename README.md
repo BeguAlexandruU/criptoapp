@@ -60,8 +60,9 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
 
 ## Update database
 ### Before run update
-1. Clear folder /alembic/versions
-2. Delete file __pycache__ in alembic folder
+1. Drop all tables in db
+2. Clear folder /alembic/versions
+3. Delete file __pycache__ in alembic folder
 
 ### After update (code update)
 
