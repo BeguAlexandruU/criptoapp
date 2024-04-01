@@ -1,4 +1,16 @@
 
+# docker
+
+Connect to app environment  
+-- run in /cripto-app
+
+```
+sudo systemctl status docker
+```
+```
+sudo systemctl start docker
+```
+
 # env
 
 Connect to app environment  
