@@ -64,14 +64,14 @@ class Post(Base):
     id = Column(Integer, primary_key=True, index=True)
     title       = Column(String(30))
     description = Column(String(255))
-    type        = Column(Integer)
+    post_type   = Column(Integer)
     status      = Column(Integer)
 
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, **kwargs):
-        self.token = self.id+1
+    #def __init__(self, **kwargs):
+    #    self.token = self.id+1
 
 
 #wallet sercion
@@ -160,7 +160,7 @@ class DemoOrder(Base):
     id = Column(Integer, primary_key=True, index=True)
     id_user     = Column(Integer, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     price       = Column(Integer)
-    type        = Column(Integer)
+    order_type        = Column(Integer)
     status      = Column(Integer)
 
     created_at = Column(DateTime, default=datetime.now)

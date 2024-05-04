@@ -22,10 +22,10 @@ source env/bin/activate
 
 # run app
 
--- run comanda in /cripto_app
+-- run comanda in /cripto-app
 
 ```
-poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
+poetry run uvicorn cripto_app.main:app --reload --host 0.0.0.0 --port 5001
 ```
 
 # Database
@@ -71,12 +71,16 @@ poetry run uvicorn api_data_drive.main:app --reload --host 0.0.0.0 --port 5001
         ```
 
 ## Update database
+
+### Before run update
+
 ### Before run update
 1. Drop all tables in db
 2. Clear folder /alembic/versions
 3. Delete file __pycache__ in alembic folder
 
 ### After update (code update)
+-- run comanda in /cripto_app
 
 1. Generate new migration
     ```
