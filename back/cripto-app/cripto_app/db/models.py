@@ -15,11 +15,17 @@ class User(Base):
     lastname    = Column(String(30))
     email       = Column(String(30))
     ref_code    = Column(String(255))
-    id_red      = Column(Integer)
+    id_ref      = Column(Integer)
     password    = Column(String(255))
     
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at  = Column(DateTime, default=datetime.now)
+    updated_at  = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    notification = relationship("Notification", back_populates="user")
+    wallet       = relationship("Wallet", back_populates="user")
+    card         = relationship("Card", back_populates="user")
+    referal      = relationship("Referal", back_populates="user")
+    demo_order   = relationship("DemoOrder", back_populates="user")
 
     def __init__(self, **kwargs):
         self.token = self.id+1
@@ -54,9 +60,6 @@ class Notification(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, **kwargs):
-        self.token = self.id+1 
-
 class Post(Base):
     __tablename__ = 'post'
     metadata = metadata
@@ -70,8 +73,7 @@ class Post(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    #def __init__(self, **kwargs):
-    #    self.token = self.id+1
+    notification = relationship("Notification", back_populates="post")
 
 
 #wallet sercion
@@ -89,9 +91,6 @@ class Wallet(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, **kwargs):
-        self.token = self.id+1 
-
 class Product(Base):
     __tablename__ = 'product'
     metadata = metadata
@@ -105,8 +104,7 @@ class Product(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, **kwargs):
-        self.token = self.id+1
+    wallet      = relationship("Wallet", back_populates="product")
 
 
 #referal section
@@ -119,12 +117,8 @@ class Referal(Base):
     id_child    = Column(Integer, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_level    = Column(Integer, ForeignKey('level.id', ondelete= 'CASCADE'), nullable=False)  
     
-    
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-    def __init__(self, **kwargs):
-        self.token = self.id+1
 
 class Level(Base):
     __tablename__ = 'level'
@@ -137,8 +131,7 @@ class Level(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, **kwargs):
-        self.token = self.id+1
+    referal    = relationship("Referal", back_populates="level")
 
 #dard (in dev section)
 class Card(Base):
@@ -160,7 +153,7 @@ class DemoOrder(Base):
     id = Column(Integer, primary_key=True, index=True)
     id_user     = Column(Integer, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     price       = Column(Integer)
-    order_type        = Column(Integer)
+    order_type  = Column(Integer)
     status      = Column(Integer)
 
     created_at = Column(DateTime, default=datetime.now)

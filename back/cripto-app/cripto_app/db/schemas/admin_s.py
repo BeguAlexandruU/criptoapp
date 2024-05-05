@@ -1,19 +1,17 @@
 from pydantic import BaseModel, Field
 
-class UserCreate(BaseModel):
+class AdminCreate(BaseModel):
     firstname: str=Field(...,example="John")
     lastname : str=Field(...,example="Watson")
-    email    : str=Field(...,example="JohnWatson@mail.com")
-    ref_code : int
-    id_ref   : int
+    username : str=Field(...,example="AnonimousUser")
+    sold     : int
     password : str
 
-class UserBase(BaseModel):
+class AdminBase(BaseModel):
     id: int
     firstname: str
     lastname : str
-    email    : str
-    ref_code : int
-    id_ref   : int
+    username : str
+    sold     : int
     password : str
     
