@@ -17,3 +17,4 @@ class UserBase(BaseModel):
     id_ref   : int
     password : str
     
+    

@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Union
 
 class ProductCreate(BaseModel):
-    title       : str=Field(...,examples="Product title")
+    title       : str=Field(...,example="Product title")
     description : str=Field(...,example="Some description")
     status      : int
     duration    : int
