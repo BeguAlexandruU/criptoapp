@@ -14,15 +14,22 @@ sudo systemctl start docker
 # env
 
 Connect to app environment  
--- run in /cripto-app
+-- run in /cripto-app ?? /back
 
 ```
 source env/bin/activate
 ```
 
-# run app
+Exit from app environment  
+-- run in (env)
 
--- run comanda in /cripto-app
+```
+deactivate
+```
+
+# run app(restapi)
+
+-- run comanda in /cripto-app (env)
 
 ```
 poetry run uvicorn cripto_app.main:app --reload --host 0.0.0.0 --port 5001
