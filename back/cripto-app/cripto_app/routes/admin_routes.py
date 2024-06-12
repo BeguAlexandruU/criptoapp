@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from cripto_app.db.models import Admin
 from cripto_app.db.crud import CrudBase
 from cripto_app.db.schemas.admin_s import AdminCreate
@@ -19,6 +19,13 @@ crud = CrudBase(Admin)
 @router.get("/all", status_code=status.HTTP_200_OK)
 async def get_all(db: DBD):
     res = await crud.read_all(db)
+    return res
+
+@router.get("/{item_id}", status_code=status.HTTP_200_OK)
+async def get_by_id(item_id: int, db: DBD):
+    res = await crud.read(db, item_id)
+    if not res:
+        raise HTTPException(status_code=404, detail="Item not found")
     return res
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
