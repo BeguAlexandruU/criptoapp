@@ -36,6 +36,8 @@ poetry run uvicorn cripto_app.main:app --reload --host 0.0.0.0 --port 5001
 ```
 
 # Database
+## DB design
+https://drawsql.app/teams/indigital/diagrams/criptoapp
 
 ## init database
 -- run comanda in /cripto_app
