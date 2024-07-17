@@ -12,6 +12,7 @@ class AdminBase(BaseModel):
     firstname: str
     lastname : str
     username : str
+    token : str
     sold     : int
     password : str
     

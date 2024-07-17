@@ -40,13 +40,14 @@ class Admin(Base):
     username = Column(String(30))
     sold = Column(Integer, default=0)
     password = Column(String(255))
-    token = Column(String(255), unique=True)
+    token = Column(String(255), unique=True, default=str(uuid4()))
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.token = lambda: str(uuid4())
+    # def __init__(self, **kwargs):
+    #     super().__init__(**kwargs)
+    #     self.token = str(uuid4())
+
 
 #notification posts
 class Notification(Base):
