@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData
 from .base import Base
 from sqlalchemy.orm import relationship
 from datetime import datetime
-
+from uuid import uuid4
 metadata = MetaData()
 
 #user section
@@ -14,10 +14,9 @@ class User(Base):
     firstname = Column(String(30))
     lastname = Column(String(30))
     email = Column(String(30))
-    ref_code = Column(String(255))
-    id_ref = Column(Integer)
+    ref_code = Column(String(255), unique=True, default=lambda: str(uuid4()))
+    id_ref = Column(Integer, default=0)
     password = Column(String(255))
-    
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
@@ -25,9 +24,11 @@ class User(Base):
     wallet = relationship("Wallet", back_populates="user")
     card = relationship("Card", back_populates="user")
     demo_order = relationship("DemoOrder", back_populates="user")
-
-    def __init__(self, **kwargs):
-        self.token = self.id+1
+    
+    # def __init__(self, **kwargs):
+    #     super().__init__(**kwargs)
+    #     self.token = lambda: str(uuid4())
+    
 
 class Admin(Base):
     __tablename__ = 'admin'
@@ -37,14 +38,15 @@ class Admin(Base):
     firstname = Column(String(30))
     lastname = Column(String(30))
     username = Column(String(30))
-    sold = Column(Integer)
+    sold = Column(Integer, default=0)
     password = Column(String(255))
-    
+    token = Column(String(255), unique=True)
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     def __init__(self, **kwargs):
-        self.token = self.id+1
+        super().__init__(**kwargs)
+        self.token = lambda: str(uuid4())
 
 #notification posts
 class Notification(Base):
