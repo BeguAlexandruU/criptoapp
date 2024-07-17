@@ -1,12 +1,49 @@
-from typing import Union
-from fastapi import FastAPI
+from typing import Annotated, Union
+from fastapi import Depends, FastAPI
 from cripto_app.routes import admin_routes, card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, user_routes, wallet_routes
+import fastapi_users
+from cripto_app.db.database import get_db
+from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user
+from cripto_app.db.auth.schemas import UserCreate, UserRead, UserUpdate
+from cripto_app.db.models import User
+from sqlalchemy.orm import Session
 
-app = FastAPI()
+app = FastAPI(
+    title="criptoapp",
+    description="invetitions in cripto",
+    version="0.0.1"
+)
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+DBD = Annotated[Session, Depends(get_db)]
+
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+    include_in_schema=True
+)
+app.include_router(
+    fastapi_users.get_auth_router(jwt_auth_backend),
+    prefix="/auth/jwt",
+    tags=["auth"],
+    include_in_schema=True
+)
+app.include_router(
+    fastapi_users.get_reset_password_router(),
+    prefix="/auth",
+    tags=["auth"],
+    include_in_schema=True
+)
+app.include_router(
+    fastapi_users.get_verify_router(UserRead),
+    prefix="/auth",
+    tags=["auth"],
+    include_in_schema=True
+)
 
 app.include_router(admin_routes.router)
 app.include_router(card_routes.router)

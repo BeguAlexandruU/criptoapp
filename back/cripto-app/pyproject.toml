@@ -15,6 +15,7 @@ loguru = "^0.7.2"
 aiomysql = "^0.2.0"
 pydantic-settings = "^2.2.1"
 python-dotenv = "^1.0.1"
+fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 
 
 [build-system]
