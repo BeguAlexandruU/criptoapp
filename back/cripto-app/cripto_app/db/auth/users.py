@@ -37,7 +37,7 @@ async def get_user_manager(user_db: SQLAlchemyUserDatabase = Depends(get_user_db
 
 bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
 cookie_transport = CookieTransport(
-    cookie_name="PeraUser",
+    cookie_name="CriptoAppUser",
     cookie_max_age=3600,
 )
 
