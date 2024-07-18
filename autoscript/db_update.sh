@@ -1,18 +1,8 @@
 #!/bin/bash
 
-PATH_DB="../back/database/"
-PATH_ALEMBIC="../back/cripto-app/cripto_app/alembic"
 PATH_MIGRATION="../back/cripto-app/cripto_app"
 
 PATH_ORIGIN=$(pwd)
-
-## drop tables from db
-
-
-
-
-##
-
 
 ##generate new migration
 
