@@ -1,3 +1,4 @@
+from weakref import ref
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData
 from .base import Base
 from sqlalchemy.orm import relationship
@@ -12,6 +13,7 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     metadata = metadata
     
     ref_code = Column(String(255), unique=True, default=lambda: str(uuid4()))
+    ref_code_parent = Column(String(255), default='')
 
     notification = relationship("Notification", back_populates="user")
     wallet = relationship("Wallet", back_populates="user")

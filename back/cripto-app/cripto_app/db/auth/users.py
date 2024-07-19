@@ -2,7 +2,7 @@ from typing import Optional
 import uuid
 from cripto_app.settings import RESET_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
 from cripto_app.db.database import get_user_db
-from cripto_app.db.models import User
+from cripto_app.db.models import User, Referal
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
 from fastapi_users.authentication import (
@@ -12,13 +12,21 @@ from fastapi_users.authentication import (
     CookieTransport
 )
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
+from cripto_app.db.crud import CrudBase
+
+CrudReferal = CrudBase(Referal)
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
-    reset_token_secret = "secret"
-    verification_token_secret = "secret"
+    reset_token_secret = RESET_TOKEN_SECRET
+    verification_token_secret = VERIFICATION_TOKEN_SECRET
     
     async def on_after_register(self, user: User, request: Optional[Request] = None):
-        print(user.__dict__)
+        print(f"User {user.id} has registered.")
+        if user.ref_code_parent != '':
+            print(f"User {user.id} has a parent with ref code {user.ref_code_parent}")
+
+        else:
+            print(f"User {user.id} has no parent")
 
     async def on_after_forgot_password(
         self, user: User, token: str, request: Optional[Request] = None
