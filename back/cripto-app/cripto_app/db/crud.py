@@ -82,6 +82,60 @@ class CrudBase:
         except Exception as err:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))
     
+    async def count_by_column(self, db: AsyncSession, column: str, value: Union[str, int]):
+        try:
+            if not await self.verify_exist_column(db, column):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Column '{column}' not found in the model")
+            
+            stmt = select(self.model).where(getattr(self.model, column) == value)
+            result = await db.execute(stmt)
+            db_obj = result.scalars().all()
+            return len(db_obj)
+        except Exception as err:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))
     
+    async def update(self, db: AsyncSession, id: int, obj_data: BaseModel):
+        try:
+            stmt = select(self.model).where(self.model.id == id)
+            result = await db.execute(stmt)
+            db_obj = result.scalar().first()
+            if db_obj is None:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+            for key, value in obj_data.model_dump().items():
+                setattr(db_obj, key, value)
+            await db.commit()
+            return db_obj
+        except Exception as err:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))
+    
+    async def update_by_column(self, db: AsyncSession, id: int, column: str, value: Union[str, int]):
+        try:
+            if not await self.verify_exist_column(db, column):
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Column '{column}' not found in the model")
+            
+            stmt = select(self.model).where(self.model.id == id)
+            result = await db.execute(stmt)
+            db_obj = result.scalar().first()
+            if db_obj is None:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+            
+            setattr(db_obj, column, value)
+            await db.commit()
+            return db_obj
+        except Exception as err:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))
+    
+    async def delete(self, db: AsyncSession, id: int):
+        try:
+            stmt = select(self.model).where(self.model.id == id)
+            result = await db.execute(stmt)
+            db_obj = result.scalar().first()
+            if db_obj is None:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+            db.delete(db_obj)
+            await db.commit()
+            return db_obj
+        except Exception as err:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))
         
         
