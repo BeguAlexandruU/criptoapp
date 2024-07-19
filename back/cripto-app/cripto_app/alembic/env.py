@@ -5,8 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from settings import mysql_db, mysql_host, mysql_password, mysql_port, mysql_user
-from db.models import metadata
+from cripto_app.settings import mysql_db, mysql_host, mysql_password, mysql_port, mysql_user
+from cripto_app.db.models import metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
