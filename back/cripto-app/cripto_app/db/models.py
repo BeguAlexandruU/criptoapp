@@ -62,14 +62,16 @@ class Notification(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     id_user = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
-    id_post = Column(Integer, ForeignKey('post.id', ondelete= 'CASCADE'), nullable=False) 
+
+    title = Column(String(30))
+    message = Column(String(255))
     status = Column(Integer)
+    type = Column(String(30))
 
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     user = relationship("User", back_populates="notification")
-    post = relationship("Post", back_populates="notification")
 
 class Post(Base):
     __tablename__ = 'post'
@@ -78,13 +80,11 @@ class Post(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(30))
     description = Column(String(255))
-    post_type = Column(Integer)
+    type = Column(Integer)
     status = Column(Integer)
 
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-    notification = relationship("Notification", back_populates="post")
 
 
 #wallet sercion
