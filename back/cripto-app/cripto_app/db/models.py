@@ -127,14 +127,12 @@ class Referal(Base):
     id = Column(Integer, primary_key=True, index=True)
     id_parent = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_child = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
-    id_level = Column(Integer, ForeignKey('level.id', ondelete= 'CASCADE'), nullable=False)  
     
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     user_parent = relationship("User", foreign_keys=[id_parent])
     user_child = relationship("User", foreign_keys=[id_child])
-    level = relationship("Level", back_populates="referal")
     
 
 class Level(Base):
@@ -147,8 +145,6 @@ class Level(Base):
     
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-    referal = relationship("Referal", back_populates="level")
 
 #card (in dev section)
 class Card(Base):
