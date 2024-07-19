@@ -2,7 +2,7 @@ import uuid
 from fastapi_users import schemas
 
 class UserCreate(schemas.BaseUserCreate):
-    pass
+    ref_code_parent: str = ''
 
 class UserRead(schemas.BaseUser[uuid.UUID]):
     pass
