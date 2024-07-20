@@ -29,7 +29,7 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     verification_token_secret = VERIFICATION_TOKEN_SECRET
     
     async def on_after_register(self,user: User, request: Optional[Request] = None) :
-        #try:
+        try:
 
             async with SessionLocal() as db:
 
@@ -37,7 +37,6 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
 
                 if res :
                     updated_user = await CrudUser.update_by_column(db, user.id, "id_stripe_customer", res.id)
-                    print(updated_user[0].__dict__)
 
                 if user.ref_code_parent != '' :
                     
@@ -56,8 +55,8 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
                         raise HTTPException(status_code=404, detail="Error creating referal")
 
                             
-        #except Exception as err:
-            #raise HTTPException(status_code=404, detail=f"Internal error: {err}")
+        except Exception as err:
+            raise HTTPException(status_code=404, detail=f"Internal error: {err}")
         
 
     async def on_after_forgot_password(

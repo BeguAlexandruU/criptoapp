@@ -50,6 +50,7 @@ class CrudBase:
     async def read_by_column(self, db: AsyncSession, column: str, value: Union[str, int]):
         
         try:
+            
             if not await self.verify_exist_column(db, column):
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Column '{column}' not found in the model")
             
@@ -113,14 +114,21 @@ class CrudBase:
             if not await self.verify_exist_column(db, column):
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Column '{column}' not found in the model")
             
+            # show columns of the model
+            # print([c_attr.key for c_attr in inspect(self.model).mapper.column_attrs])
+            
             stmt = select(self.model).where(self.model.id == id)
             result = await db.execute(stmt)
             db_obj = result.scalars().first()
+            
             if db_obj is None:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
             
-            if not setattr(db_obj, column, value): 
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Atribute '{column}' do not exist in model")
+            try:
+                setattr(db_obj, column, value)
+            except AttributeError:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Attribute '{column}' does not exist in model")
+            
             await db.commit()
             return db_obj
         except Exception as err:

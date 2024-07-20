@@ -18,8 +18,10 @@ class UserCreate(schemas.BaseUserCreate):
             raise ValueError('ref_code_parent must be a valid UUID4 or an empty string')
         
 class UserRead(schemas.BaseUser[uuid.UUID]):
-    pass
+    id_stripe_customer: str
+    name: str
 
 class UserUpdate(schemas.BaseUserUpdate):
-    pass
+    id_stripe_customer: str
+    name: str
 
