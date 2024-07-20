@@ -1,5 +1,5 @@
 from weakref import ref
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, MetaData
+from sqlalchemy import Column, Float, Integer, String, DateTime, ForeignKey, MetaData
 from .base import Base
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -14,6 +14,9 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     
     ref_code = Column(String(255), unique=True, default=lambda: str(uuid4()))
     ref_code_parent = Column(String(255), default='')
+
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     notification = relationship("Notification", back_populates="user")
     wallet = relationship("Wallet", back_populates="user")
@@ -112,6 +115,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(64))
     description = Column(String(255))
+    price = Column(Float)
     status = Column(Integer)
     duration = Column(Integer)
 
