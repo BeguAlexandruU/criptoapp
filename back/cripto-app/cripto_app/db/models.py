@@ -23,20 +23,9 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     card = relationship("Card", back_populates="user")
     demo_order = relationship("DemoOrder", back_populates="user")
    
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    # id = Column(Integer, primary_key=True, index=True)
-    # firstname = Column(String(30))
-    # lastname = Column(String(30))
-    # email = Column(String(30))
-    # ref_code = Column(String(255), unique=True, default=lambda: str(uuid4()))
-    # id_ref = Column(Integer, default=0)
-    # password = Column(String(255))
-    # created_at = Column(DateTime, default=datetime.now)
-    # updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
-    #     self.token = lambda: str(uuid4())
     
 
 class Admin(Base):
