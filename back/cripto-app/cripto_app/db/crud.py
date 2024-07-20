@@ -40,7 +40,7 @@ class CrudBase:
         try:
             stmt = select(self.model).where(self.model.id == id)
             result = await db.execute(stmt)
-            db_obj = result.scalar().first()
+            db_obj = result.first()
             if db_obj is None:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
             return db_obj
@@ -55,7 +55,7 @@ class CrudBase:
             
             stmt = select(self.model).where(getattr(self.model, column) == value)
             result = await db.execute(stmt)
-            db_obj = result.scalar().first()
+            db_obj = result.first()
             if db_obj is None:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
             return db_obj

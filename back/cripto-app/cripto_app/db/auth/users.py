@@ -1,5 +1,7 @@
-from typing import Annotated, Optional
+
+from typing import Optional
 import uuid
+from weakref import ref
 from cripto_app.settings import RESET_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
 from cripto_app.db.database import get_user_db
 from cripto_app.db.models import User, Referal
@@ -13,10 +15,9 @@ from fastapi_users.authentication import (
 )
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from cripto_app.db.crud import CrudBase
-from sqlalchemy.orm import Session
-from cripto_app.db.database import get_db
+from cripto_app.db.database import SessionLocal
+from cripto_app.db.schemas.referal_s import ReferalCreate
 
-DBD = Annotated[Session, Depends(get_db)]
 
 CrudReferal = CrudBase(Referal)
 CrudUser = CrudBase(User)
@@ -26,14 +27,27 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     verification_token_secret = VERIFICATION_TOKEN_SECRET
     
     async def on_after_register(self,user: User, request: Optional[Request] = None) :
-        print(f"User {user.id} has registered.")
-        if user.ref_code_parent != '':
-            print(f"User {user.id} has a parent with ref code {user.ref_code_parent}")
-            ref_users = await CrudUser.read_all(DBD)
-            # print(ref_users.__dict__)
+        if user.ref_code_parent != '' :
+            async with SessionLocal() as db:
+                try:
+                    ref_p_users = await CrudUser.read_by_column(db, 'ref_code', user.ref_code_parent)
+                    if ref_p_users is None:
+                        raise Exception("Referal parent not found, invalid ref code")
+                    
+                    NewRef = ReferalCreate(
+                        id_parent=ref_p_users[0].id,
+                        id_child=user.id
+                    )
+                    
+                    new_ref = await CrudReferal.create(db, NewRef)
+                    
+                    if new_ref is None:
+                        raise Exception("Error creating referal")
 
-        else:
-            print(f"User {user.id} has no parent")
+                            
+                except Exception as err:
+                    raise Exception(f"Internal erorr: {str(err)}")
+        
 
     async def on_after_forgot_password(
         self, user: User, token: str, request: Optional[Request] = None
