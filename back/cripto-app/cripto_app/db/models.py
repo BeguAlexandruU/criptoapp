@@ -12,8 +12,10 @@ metadata = MetaData()
 class User(SQLAlchemyBaseUserTableUUID, Base):
     metadata = metadata
     
+    name = Column(String(60))
     ref_code = Column(String(255), unique=True, default=lambda: str(uuid4()))
     ref_code_parent = Column(String(255), default='')
+    id_stripe_customer = Column(String(255), default='')
 
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)

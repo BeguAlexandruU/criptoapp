@@ -1,12 +1,13 @@
 from typing import Annotated, Union
 from fastapi import Depends, FastAPI
-from cripto_app.routes import admin_routes, card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, user_routes, wallet_routes
+from cripto_app.routes import admin_routes, card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, wallet_routes
 import fastapi_users
 from cripto_app.db.database import get_db
 from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user
 from cripto_app.db.auth.schemas import UserCreate, UserRead, UserUpdate
 from cripto_app.db.models import User
 from sqlalchemy.orm import Session
+from cripto_app.routes.payments import stripe_routes
 
 app = FastAPI(
     title="criptoapp",
@@ -45,6 +46,9 @@ app.include_router(
     include_in_schema=True
 )
 
+#stripe routes
+app.include_router(stripe_routes.router)
+
 app.include_router(admin_routes.router)
 app.include_router(card_routes.router)
 app.include_router(demo_order_routes.router)
@@ -53,6 +57,5 @@ app.include_router(notification_routes.router)
 app.include_router(post_routes.router)
 app.include_router(product_routes.router)
 app.include_router(referal_routes.router)
-app.include_router(user_routes.router)
 app.include_router(wallet_routes.router)
 

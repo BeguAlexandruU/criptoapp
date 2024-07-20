@@ -1,11 +1,12 @@
 
 from typing import Optional
 import uuid
-from weakref import ref
+from cripto_app.payments.stripe import StripeClient
+from cripto_app.settings import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
 from cripto_app.settings import RESET_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
 from cripto_app.db.database import get_user_db
 from cripto_app.db.models import User, Referal
-from fastapi import Depends, Request
+from fastapi import Depends, HTTPException, Request
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
 from fastapi_users.authentication import (
     AuthenticationBackend, 
@@ -21,32 +22,42 @@ from cripto_app.db.schemas.referal_s import ReferalCreate
 
 CrudReferal = CrudBase(Referal)
 CrudUser = CrudBase(User)
+Stripe = StripeClient(STRIPE_SECRET_KEY)
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_token_secret = RESET_TOKEN_SECRET
     verification_token_secret = VERIFICATION_TOKEN_SECRET
     
     async def on_after_register(self,user: User, request: Optional[Request] = None) :
-        if user.ref_code_parent != '' :
+        #try:
+
             async with SessionLocal() as db:
-                try:
+
+                res = Stripe.create_customer(user.email, user.name)
+
+                if res :
+                    updated_user = await CrudUser.update_by_column(db, user.id, "id_stripe_customer", res.id)
+                    print(updated_user[0].__dict__)
+
+                if user.ref_code_parent != '' :
+                    
                     ref_p_users = await CrudUser.read_by_column(db, 'ref_code', user.ref_code_parent)
                     if ref_p_users is None:
-                        raise Exception("Referal parent not found, invalid ref code")
-                    
+                        raise HTTPException(status_code=404, detail="Referal parent not found, invalid ref code")
+                        
                     NewRef = ReferalCreate(
                         id_parent=ref_p_users[0].id,
                         id_child=user.id
                     )
-                    
+                        
                     new_ref = await CrudReferal.create(db, NewRef)
-                    
+                        
                     if new_ref is None:
-                        raise Exception("Error creating referal")
+                        raise HTTPException(status_code=404, detail="Error creating referal")
 
                             
-                except Exception as err:
-                    raise Exception(f"Internal erorr: {str(err)}")
+        #except Exception as err:
+            #raise HTTPException(status_code=404, detail=f"Internal error: {err}")
         
 
     async def on_after_forgot_password(

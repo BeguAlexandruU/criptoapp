@@ -1,12 +1,13 @@
 import uuid
 from fastapi_users import schemas
-from typing import Union
-from pydantic import UUID4, validator
+from typing import Optional, Union
+from pydantic import UUID4, Field, validator
 
 class UserCreate(schemas.BaseUserCreate):
+    name: str= Field(max_length=60, default="John Stethem")
     ref_code_parent: Union[UUID4, str] = ''
+    id_stripe_customer: Optional[str]= ''
     
-    # Validation of the ref_code_parent field
     @validator('ref_code_parent', pre=True, always=True)
     def check_uuid_or_empty(cls, v):
         if v == '':
