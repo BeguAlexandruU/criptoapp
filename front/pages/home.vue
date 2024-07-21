@@ -1,11 +1,21 @@
 <template>
 	<div class="pl-2">
-		<pre>{{ $data }}</pre>
+		<h2>home page</h2>
+		<pre>{{ data }}</pre>
+	</div>
+
+	<div v-if="status === 'pending'">
+		Loading ...
+	</div>
+	<div v-else>
+		<div v-for="item in posts">
+			<h1>title: {{item.title}}</h1>
+		</div>
 	</div>
 </template>
 
+
 <script setup lang="ts">
-onMounted(async () => {
-	const { data } = await useFetch('/api/posts')
-})
+
+const { status, data: posts } = await useFetch('/api/posts', {lazy: true})
 </script>
