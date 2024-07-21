@@ -17,6 +17,7 @@ pydantic-settings = "^2.2.1"
 python-dotenv = "^1.0.1"
 fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 stripe = "^10.4.0"
+websockets = "^12.0"
 
 
 [build-system]

@@ -1,6 +1,7 @@
 from typing import Annotated, Union
 from fastapi import Depends, FastAPI
-from cripto_app.routes import admin_routes, card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, wallet_routes
+from cripto_app.routes.db import admin_routes, card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, wallet_routes
+from cripto_app.routes.ws import notifications as ws_notifications
 import fastapi_users
 from cripto_app.db.database import get_db
 from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user
@@ -58,4 +59,7 @@ app.include_router(post_routes.router)
 app.include_router(product_routes.router)
 app.include_router(referal_routes.router)
 app.include_router(wallet_routes.router)
+
+#websocket routes
+app.include_router(ws_notifications.router)
 
