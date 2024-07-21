@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
-
-const { status, data: posts }: { status, data:Post[]}= await useFetch('/api/posts', {lazy: true})
+const { status, data: posts } = await useFetch<Post[]>('/api/posts', {
+	lazy: true,
+})
 </script>

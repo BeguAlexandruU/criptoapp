@@ -33,6 +33,6 @@ dist/
 .DS_Store
 
 # Nuxt files
-.nuxt/
+.nuxt
 dist/
 ```
