@@ -1,7 +1,6 @@
 <template>
 	<div class="pl-2">
 		<h2>home page</h2>
-		<pre>{{ data }}</pre>
 	</div>
 
 	<div v-if="status === 'pending'">
@@ -17,5 +16,5 @@
 
 <script setup lang="ts">
 
-const { status, data: posts } = await useFetch('/api/posts', {lazy: true})
+const { status, data: posts }: { status, data:Post[]}= await useFetch('/api/posts', {lazy: true})
 </script>
