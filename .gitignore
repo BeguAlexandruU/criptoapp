@@ -31,3 +31,8 @@ dist/
 *.swp
 *.swo
 .DS_Store
+
+# Nuxt files
+.nuxt/
+dist/
+```

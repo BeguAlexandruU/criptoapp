@@ -1,4 +1,5 @@
 from typing import Annotated, Union
+from cripto_app.settings import ORIGINS
 from fastapi import Depends, FastAPI
 from cripto_app.routes.db import admin_routes, card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, wallet_routes
 from cripto_app.routes.ws import notifications as ws_notifications
@@ -9,12 +10,23 @@ from cripto_app.db.auth.schemas import UserCreate, UserRead, UserUpdate
 from cripto_app.db.models import User
 from sqlalchemy.orm import Session
 from cripto_app.routes.payments import stripe_routes
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="criptoapp",
     description="invetitions in cripto",
     version="0.0.1"
 )
+
+""" Configuration CORS """
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def read_root():
