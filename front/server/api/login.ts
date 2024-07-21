@@ -34,10 +34,8 @@ export default defineEventHandler(async event => {
 			expires: d,
 		})
 
-		return 'Success'
+		return { status: true }
 	} catch (error) {
-		console.error('Error fetching posts', error)
-		// Handle the error as needed in your application
-		return { error: 'Failed to fetch posts' }
+		return { status: false }
 	}
 })
