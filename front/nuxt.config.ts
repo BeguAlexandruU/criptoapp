@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
 	compatibilityDate: '2024-04-03',
 	devtools: { enabled: true },
-	modules: ['@nuxtjs/tailwindcss', "@nuxt/ui"],
+	modules: ['@nuxtjs/tailwindcss', '@nuxt/ui'],
 	tailwindcss: {
 		cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
 		configPath: 'tailwind.config.js',
