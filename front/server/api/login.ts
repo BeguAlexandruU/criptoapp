@@ -13,17 +13,16 @@ export default defineEventHandler(async event => {
 					email
 				)}&password=${encodeURIComponent(
 					password
-				)}&scope=&client_id=&client_secret=`, // Adjust the body content as needed for your request
-				credentials: 'include', // This will include cookies in the request and response
+				)}&scope=&client_id=&client_secret=`,
+				credentials: 'include',
 			}
 		)
 
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`)
 		}
-
 		const d = new Date()
-		d.setTime(d.getTime() + 1 * 60 * 60 * 1000)
+		d.setTime(d.getTime() + 1 * 60 * 60 * 24 * 1000)
 		const data: AccessTokenData = await response.json()
 		const access_token: string = data.access_token
 
@@ -34,7 +33,7 @@ export default defineEventHandler(async event => {
 			expires: d,
 		})
 
-		return { status: true }
+		return { status: true, data: { access_token } }
 	} catch (error) {
 		return { status: false }
 	}

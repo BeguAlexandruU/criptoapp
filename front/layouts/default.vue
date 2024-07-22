@@ -2,8 +2,8 @@
 	<div>
 		<!-- <AppHeader /> -->
 		<!-- <AppSidebar /> -->
-		<div class="w-full lg:ps-64">
-		<slot />
-		</div>
+		<UContainer>
+			<slot />
+		</UContainer>
 	</div>
 </template>
