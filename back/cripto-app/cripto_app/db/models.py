@@ -74,7 +74,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(30))
     description = Column(String(255))
-    type = Column(Integer)
+    type = Column(String(30))
     status = Column(Integer)
 
     created_at = Column(DateTime, default=datetime.now)

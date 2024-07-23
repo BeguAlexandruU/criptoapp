@@ -4,13 +4,13 @@ from typing import Union
 class PostCreate(BaseModel):
     title: str=Field(default="Title")
     description: str=Field(...,example="Title")
-    type: int
+    type: str
     status: int
 
 class PostBase(BaseModel):
     id: int
     title: str
     description: str
-    type: int
+    type: str
     status: int
     
