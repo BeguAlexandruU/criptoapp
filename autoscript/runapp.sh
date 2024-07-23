@@ -1,18 +1,9 @@
 #!/bin/bash
 
-PATH_APP="../back/cripto-app"
+bash db_start.sh
 
-source ../back/env/bin/activate
+#bash back_runapp.sh
+#bash front_runapp.sh
 
-cd $PATH_APP
-
-PATTERN='^[0-9]+$'
-
-if [[ $1 =~ $PATTERN ]]
-then
-    poetry run uvicorn cripto_app.main:app --workers $1 --host 0.0.0.0 --port 5001
-else
-    poetry run uvicorn cripto_app.main:app --reload --host 0.0.0.0 --port 5001
-fi
-
-deactivate
+gnome-terminal --tab --title=back -- bash -c "bash back_runapp.sh ;bash"
+gnome-terminal --tab --title=front -- bash -c "bash front_runapp.sh ;bash"
