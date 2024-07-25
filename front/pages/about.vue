@@ -1,10 +1,15 @@
 <template>
-  <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
-    <UAvatar
-        src="https://avatars.githubusercontent.com/u/739984?v=4"
-        alt="Avatar"
-    />
-  </UDropdown>
+  <div class="flex flex-col justify-between h-32">
+    <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
+      <UAvatar
+          src="https://avatars.githubusercontent.com/u/739984?v=4"
+          alt="Avatar"
+      />
+    </UDropdown>
+    Icon
+    <UIcon name="i-uiw-logout"/>
+  </div>
+  
 </template>
 
 <script setup lang="ts">
@@ -15,27 +20,11 @@ const items = [
       src: 'https://avatars.githubusercontent.com/u/739984?v=4'
     }
   }], [{
-    label: 'Edit',
-    icon: 'i-heroicons-pencil-square-20-solid',
-    shortcuts: ['E'],
+    label: 'Logout',
+    icon: 'i-uiw-logout',
     click: () => {
-      console.log('Edit')
+      console.log('Logout')
     }
-  }, {
-    label: 'Duplicate',
-    icon: 'i-heroicons-document-duplicate-20-solid',
-    shortcuts: ['D'],
-    disabled: true
-  }], [{
-    label: 'Archive',
-    icon: 'i-heroicons-archive-box-20-solid'
-  }, {
-    label: 'Move',
-    icon: 'i-heroicons-arrow-right-circle-20-solid'
-  }], [{
-    label: 'Delete',
-    icon: 'i-heroicons-trash-20-solid',
-    shortcuts: ['⌘', 'D']
   }]
 ]
 </script>

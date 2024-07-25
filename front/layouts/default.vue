@@ -1,8 +1,9 @@
 <template>
 	<div>
-		<!-- <AppHeader /> -->
+		<AppHeader />
 		<!-- <AppSidebar /> -->
 		<UContainer>
+
 			<slot />
 		</UContainer>
 	</div>
