@@ -24,7 +24,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 	})
 		.then(res => res?.json())
 		.then(data => {
-			navigateTo('/home')
+			navigateTo('/profile')
 		})
 }
 </script>
