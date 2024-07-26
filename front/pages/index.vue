@@ -1,4 +1,5 @@
 <template>
+	<h1>home page</h1>
 	<div class="flex flex-col justify-between h-32">
 	  <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
 		<UAvatar
