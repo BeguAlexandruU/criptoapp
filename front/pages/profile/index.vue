@@ -21,7 +21,7 @@
 <script setup lang="ts">
 definePageMeta({
 	title: 'Home',
-	layout: 'default',
+	layout: 'profile',
 	middleware: ['auth-user'],
 })
 
