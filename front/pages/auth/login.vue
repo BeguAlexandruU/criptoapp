@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from '#ui/types'
 
+definePageMeta({
+	title: 'Login',
+	layout: 'auth',
+})
+
 const state = reactive({
 	email: undefined,
 	password: undefined,
