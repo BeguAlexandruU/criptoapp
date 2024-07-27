@@ -20,13 +20,12 @@
 
 <script setup lang="ts">
 definePageMeta({
-	title: 'Home',
+	title: 'Profile',
 	layout: 'profile',
 	middleware: ['auth-user'],
 })
 
 const logout = async () => {
-	// @ts-ignore
 	await $fetch('/api/logout')
 	navigateTo('/auth/login')
 }
