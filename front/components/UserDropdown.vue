@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { isHelpSlideoverOpen } = useDashboard()
-const { isDashboardSearchModalOpen } = useUIState()
 const { metaSymbol } = useShortcuts()
 
 const items = computed(() => [
