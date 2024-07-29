@@ -1,7 +1,8 @@
 <template>
-	<div class="pl-2">
-		<h2>Profile</h2>
-	</div>
+	<DashboardNavbar
+    	title="Profile"
+    	v-model="isSidebarOpen"
+  	/>
 
 	<div v-if="status === 'pending'">Loading ...</div>
 	<div v-else>
@@ -19,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+const {isSidebarOpen} = useDashboard()
 definePageMeta({
 	title: 'Profile',
 	layout: 'profile',
