@@ -61,7 +61,7 @@ const footerLinks = [{
   <!-- layout container -->
   <div class="flex h-screen bg-gray-900">
     <!-- panel container -->
-    <div v-if="isSidebarOpen" class="flex flex-col w-60 p-3 bg-gray-900 border-r-2 border-gray-800 h-screen absolute md:relative">
+    <div v-if="isSidebarOpen" class="flex flex-col w-60 p-3 bg-gray-900 border-r border-gray-800 h-screen absolute md:relative">
       <!-- navbar -->
       <div class="flex items-stretch gap-1.5">
           <UButton
