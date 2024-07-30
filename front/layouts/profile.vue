@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const route = useRoute()
 const appConfig = useAppConfig()
 const { isHelpSlideoverOpen, isSidebarOpen } = useDashboard()
@@ -8,38 +9,27 @@ const links = [{
   label: 'Profile',
   icon: 'i-heroicons-user',
   to: '/profile',
-  tooltip: {
-    text: 'Profile',
-    shortcuts: ['G', 'P']
-  }
 }, {
   id: 'inbox',
   label: 'Inbox',
   icon: 'i-heroicons-inbox',
   to: '/profile/inbox',
   badge: '0',
-  tooltip: {
-    text: 'Inbox',
-    shortcuts: ['H', 'I']
-  }
 }, {
-  id: 'users',
-  label: 'Users',
+  id: 'posts',
+  label: 'Posts',
+  to: '/profile/posts',
+  icon: 'heroicons:newspaper',
+}, {
+  id: 'products',
+  label: 'Products',
+  icon: 'heroicons:shopping-cart',
+  to: '/profile/products',
+}, {
+  id: 'referals',
+  label: 'Referals',
   icon: 'i-heroicons-user-group',
-  to: '/',
-  tooltip: {
-    text: 'Users',
-    shortcuts: ['G', 'U']
-  }
-}, {
-  id: 'settings',
-  label: 'Settings',
-  to: '/',
-  icon: 'i-heroicons-cog-8-tooth',
-  tooltip: {
-    text: 'Settings',
-    shortcuts: ['G', 'S']
-  }
+  to: '/profile/referals',
 }]
 
 const footerLinks = [{
@@ -52,6 +42,8 @@ const footerLinks = [{
   click: () => isHelpSlideoverOpen.value = true
 }]
 
+
+
 // const defaultColors = ref(['green', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet'].map(color => ({ label: color, chip: color, click: () => appConfig.ui.primary = color })))
 // const colors = computed(() => defaultColors.value.map(color => ({ ...color, active: appConfig.ui.primary === color.label })))
 </script>
@@ -60,11 +52,11 @@ const footerLinks = [{
   
   <!-- layout container -->
   <div class="flex h-screen bg-gray-900">
-    <!-- panel container -->
-    <div v-if="isSidebarOpen" class="flex flex-col w-60 p-3 bg-gray-900 border-r border-gray-800 h-screen absolute md:relative">
+    <!-- sidebar container -->
+    <DashboardSidebar v-model="isSidebarOpen">
       <!-- navbar -->
       <div class="flex items-stretch gap-1.5">
-          <UButton
+        <UButton
             icon="material-symbols:menu-rounded"
             size="sm"
             square
@@ -89,6 +81,7 @@ const footerLinks = [{
           </UButton>
           
       </div>
+
       <!-- sidebar container -->
       <div class="flex flex-col flex-1 overflow-scroll">
 
@@ -99,16 +92,15 @@ const footerLinks = [{
         <div class="flex-1"/>
 
         <UVerticalNavigation :links="footerLinks" />
-
-
       </div>
+
       <!-- user dropdown -->
       <div >
         <UDivider/>
         <!-- ~/components/UserDropdown.vue -->
         <UserDropdown />
       </div>
-    </div>
+    </DashboardSidebar>
 
     <!-- content page -->
     <div class="w-full">

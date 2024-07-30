@@ -1,13 +1,11 @@
-import { createSharedComposable, useWindowSize } from '@vueuse/core'
-
-const { width, height } = useWindowSize()
+import { createSharedComposable} from '@vueuse/core'
 
 const _useDashboard = () => {
   const route = useRoute()
   const router = useRouter()
   const isHelpSlideoverOpen = ref(false)
   const isNotificationsSlideoverOpen = ref(false)
-  const isSidebarOpen = ref(width.value > 768)
+  const isSidebarOpen = ref(false)
 
   defineShortcuts({
     'g-h': () => router.push('/'),
@@ -17,7 +15,7 @@ const _useDashboard = () => {
   watch(() => route.fullPath, () => {
     isHelpSlideoverOpen.value = false
     isNotificationsSlideoverOpen.value = false
-    isSidebarOpen.value = (width.value > 768);
+    isSidebarOpen.value = (false);
     
   })
 
