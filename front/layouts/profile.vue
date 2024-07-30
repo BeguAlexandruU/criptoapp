@@ -35,7 +35,7 @@ const links = [{
 const footerLinks = [{
   label: 'Invite people',
   icon: 'i-heroicons-plus',
-  to: '/'
+  to: '/profile/referals'
 }, {
   label: 'Help & Support',
   icon: 'i-heroicons-question-mark-circle',
