@@ -28,7 +28,7 @@ definePageMeta({
 })
 
 const logout = async () => {
-	await $fetch('/api/logout')
+	await $fetch('/api/auth/logout')
 	navigateTo('/auth/login')
 }
 

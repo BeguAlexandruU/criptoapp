@@ -21,6 +21,7 @@ export default defineEventHandler(async event => {
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`)
 		}
+
 		const d = new Date()
 		d.setTime(d.getTime() + 1 * 60 * 60 * 24 * 1000)
 		const data: AccessTokenData = await response.json()
@@ -33,7 +34,7 @@ export default defineEventHandler(async event => {
 			expires: d,
 		})
 
-		return { status: true, data: { access_token } }
+		return { status: true}
 	} catch (error) {
 		return { status: false }
 	}

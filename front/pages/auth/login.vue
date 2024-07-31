@@ -20,17 +20,32 @@ const validate = (state: any): FormError[] => {
 
 async function onSubmit(event: FormSubmitEvent<any>) {
 	// Do something with data
-	const { login }: any = await fetch('/api/login', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(event.data),
-	})
-		.then(res => res?.json())
-		.then(data => {
-			navigateTo('/profile')
-		})
+	try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(event.data),
+        })
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok')
+        }
+
+        const data = await response.json()
+
+        if (data?.status) {
+            navigateTo('/profile')
+        } else {
+            alert("Incorrect credentials")
+        }
+		
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error)
+        alert('An error occurred. Please try again later.')
+    }
+
 }
 </script>
 

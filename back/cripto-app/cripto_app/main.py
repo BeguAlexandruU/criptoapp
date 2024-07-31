@@ -34,6 +34,7 @@ def read_root():
 
 DBD = Annotated[Session, Depends(get_db)]
 
+# user routes
 app.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
     prefix="/auth",
@@ -58,6 +59,11 @@ app.include_router(
     tags=["auth"],
     include_in_schema=True
 )
+
+@app.get("/auth/curent_user")
+def protected_route(user: User = Depends(current_active_user)):
+    
+    return f"{repr({"email": user.email, "name": user.name})}"
 
 #stripe routes
 app.include_router(stripe_routes.router)
