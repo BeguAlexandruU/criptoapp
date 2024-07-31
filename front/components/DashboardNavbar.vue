@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between items-center flex-1 h-16 px-4 border-gray-800 border-b">
+    <div class="flex justify-between items-center w-full h-16 px-4 border-gray-800 border-b">
         <div class="flex gap-1.5">
             <UButton
                 icon="material-symbols:menu-rounded"

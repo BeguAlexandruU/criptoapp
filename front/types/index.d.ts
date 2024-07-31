@@ -4,8 +4,19 @@ declare global {
 		id: number
 		title: string
 		description: string
-		type: number
+		type: string
 		status: number
+		created_at: Date
+		updated_at: Date
+	}
+
+	interface Product {
+		id: number
+		title: string
+		description: string
+		price: number
+		status: number
+		duration: number
 		created_at: Date
 		updated_at: Date
 	}

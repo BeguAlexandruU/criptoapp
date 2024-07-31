@@ -51,7 +51,7 @@ const footerLinks = [{
 <template>
   
   <!-- layout container -->
-  <div class="flex h-screen bg-gray-900">
+  <div class="flex w-screen h-screen bg-gray-900">
     <!-- sidebar container -->
     <DashboardSidebar v-model="isSidebarOpen">
       <!-- navbar -->
@@ -103,7 +103,7 @@ const footerLinks = [{
     </DashboardSidebar>
 
     <!-- content page -->
-    <div class="w-full">
+    <div class="flex flex-col w-full h-screen">
       <slot />
     </div>
 
