@@ -21,6 +21,11 @@ declare global {
 		updated_at: Date
 	}
 
+	interface UserApiResponse {
+		status: boolean
+  		data?: any
+	}
+
 	interface CookieOptions {
 		SameSite?: 'Lax' | 'Strict' | 'None'
 		Secure?: boolean

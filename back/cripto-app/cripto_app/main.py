@@ -11,6 +11,7 @@ from cripto_app.db.models import User
 from sqlalchemy.orm import Session
 from cripto_app.routes.payments import stripe_routes
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 app = FastAPI(
     title="criptoapp",
@@ -63,7 +64,7 @@ app.include_router(
 @app.get("/auth/curent_user")
 def protected_route(user: User = Depends(current_active_user)):
     
-    return f"{repr({"email": user.email, "name": user.name})}"
+    return f"{json.dumps({"email": user.email, "name": user.name})}"
 
 #stripe routes
 app.include_router(stripe_routes.router)

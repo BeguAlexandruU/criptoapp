@@ -1,5 +1,8 @@
+import { useUserStore } from "~/stores/userStore"
+
 export default defineEventHandler(async event => {
 	try {
+
 		const { email, password } = await readBody(event)
 		const response: Response = await fetch(
 			'http://localhost:5001/auth/jwt/login',
@@ -22,6 +25,7 @@ export default defineEventHandler(async event => {
 			throw new Error(`HTTP error! status: ${response.status}`)
 		}
 
+		//set cookie
 		const d = new Date()
 		d.setTime(d.getTime() + 1 * 60 * 60 * 24 * 1000)
 		const data: AccessTokenData = await response.json()
@@ -33,6 +37,28 @@ export default defineEventHandler(async event => {
 			path: '/',
 			expires: d,
 		})
+		
+		//set get user data
+		const userStore = useUserStore()
+
+		const curent_user_res = await fetch('http://localhost:5001/auth/curent_user', {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${access_token}`,
+            },
+            credentials: 'include',
+        })
+        const curent_user = await curent_user_res.json()
+		const parsed_user = JSON.parse(curent_user)
+
+		//set user data in store
+        if(curent_user.detail){
+            return { status: false }
+        }else{
+			userStore.name = parsed_user.name
+			userStore.email = parsed_user.email
+		}
 
 		return { status: true}
 	} catch (error) {

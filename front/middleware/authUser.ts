@@ -1,16 +1,19 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
 
-	const nuxtApp = useNuxtApp()
+	// const nuxtApp = useNuxtApp()
 
-	const res = await $fetch('/api/auth/curent_user')
+	// const res:UserApiResponse = await $fetch('/api/auth/curent_user')
 
-	if(res.status){
+	// if(!res.status){
+	// 	//navigateTo('/auth/login')
+	// 	return nuxtApp.runWithContext(() => navigateTo('/auth/login'))
 
-		console.log(res.data)
-	}else{
-		//navigateTo('/auth/login')
-		return nuxtApp.runWithContext(() => navigateTo('/auth/login'))
+	// }
 
-	}
+	const token = useCookie('accessToken')
+
+    if (!token.value) {
+        return navigateTo('/auth/signin')
+    }
 
 })
