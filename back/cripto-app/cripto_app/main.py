@@ -62,9 +62,8 @@ app.include_router(
 )
 
 @app.get("/auth/curent_user")
-def protected_route(user: User = Depends(current_active_user)):
-    
-    return f"{json.dumps({"email": user.email, "name": user.name})}"
+def protected_route(user: UserRead = Depends(current_active_user)):
+    return user
 
 #stripe routes
 app.include_router(stripe_routes.router)

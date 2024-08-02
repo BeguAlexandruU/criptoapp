@@ -44,7 +44,7 @@ const items = computed(() => [
 				color="gray"
 				variant="ghost"
 				class="w-full"
-				:label="userStore.name"
+				:label="userStore.user?.name"
 				:class="[open && 'bg-gray-50 dark:bg-gray-800']"
 			>
 				<template #leading>
@@ -67,7 +67,7 @@ const items = computed(() => [
 			<div class="text-left">
 				<p>Signed in as</p>
 				<p class="truncate font-medium text-gray-900 dark:text-white">
-					{{ userStore.email }}
+					{{ userStore.user?.email }}
 				</p>
 			</div>
 		</template>

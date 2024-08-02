@@ -24,11 +24,6 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     wallet = relationship("Wallet", back_populates="user")
     card = relationship("Card", back_populates="user")
     demo_order = relationship("DemoOrder", back_populates="user")
-   
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-    
 
 class Admin(Base):
     __tablename__ = 'admin'
@@ -41,6 +36,7 @@ class Admin(Base):
     sold = Column(Integer, default=0)
     password = Column(String(255))
     token = Column(String(255), unique=True, default=str(uuid4()))
+    
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 

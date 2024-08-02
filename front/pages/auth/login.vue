@@ -23,8 +23,13 @@ const userStore = useUserStore()
 async function onSubmit(event: FormSubmitEvent<any>) {
 	await userStore.signIn(event.data)
 
-	await navigateTo('/profile')
+	await navigateTo('/profile', { external: true })
 }
+
+definePageMeta({
+	title: 'Inbox',
+	layout: 'profile',
+})
 </script>
 
 <template>

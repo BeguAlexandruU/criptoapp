@@ -26,6 +26,23 @@ declare global {
 		data?: any
 	}
 
+	interface UserRead {
+		id: string
+		email: string
+		is_active: boolean
+		is_superuser: boolean
+		is_verified: boolean
+
+		nume: string
+		id_stripe_customer: string
+		ref_code: string
+		ref_code_parent: string
+
+		hashed_password: string
+		created_at: string
+		updated_at: string
+	}
+
 	interface CookieOptions {
 		SameSite?: 'Lax' | 'Strict' | 'None'
 		Secure?: boolean
