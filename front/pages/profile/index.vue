@@ -11,12 +11,6 @@
 		</div>
 	</div>
 
-	<UButton
-		@click="logout"
-		class="bg-green-200 hover:bg-greeb-500 text-black font-bold py-2 px-4 rounded"
-	>
-		Logout
-	</UButton>
 </template>
 
 <script setup lang="ts">
@@ -26,11 +20,6 @@ definePageMeta({
 	layout: 'profile',
 	middleware: ['auth-user'],
 })
-
-const logout = async () => {
-	await $fetch('/api/auth/logout')
-	navigateTo('/auth/login')
-}
 
 const { status, data: posts } = await useFetch<Post[]>('/api/posts', {
 	lazy: true,

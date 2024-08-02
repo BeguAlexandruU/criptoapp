@@ -18,7 +18,7 @@ const items = computed(() => [
     label: 'Sign out',
     icon: 'i-heroicons-arrow-left-on-rectangle',
     click: async () => {
-      await $fetch('/api/auth/logout')
+      userStore.logout()
       navigateTo('/auth/login')
     }
   }]

@@ -6,7 +6,9 @@ export default defineNuxtConfig({
 		'@nuxt/ui',
 		'@pinia/nuxt',
 	],
-	
+	pinia: {
+		storesDirs: ['./stores/**', './custom-folder/stores/**'],
+	},
 	// tailwindcss: {
 	// 	cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
 	// 	configPath: 'tailwind.config.js',
