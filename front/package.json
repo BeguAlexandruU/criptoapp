@@ -1,31 +1,32 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@headlessui/vue": "^1.7.22",
-    "@nuxt/icon": "^1.2.1",
-    "@nuxt/ui": "^2.17.0",
-    "@nuxtjs/tailwindcss": "^6.12.1",
-    "@pinia/nuxt": "^0.5.2",
-    "nuxt": "^3.12.4",
-    "pinia": "^2.2.0",
-    "vue": "latest",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@iconify/json": "^2.2.230",
-    "@nuxtjs/color-mode": "^3.4.2",
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/forms": "^0.5.7",
-    "@tailwindcss/typography": "^0.5.13"
-  }
+	"name": "nuxt-app",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"start": "nuxt start"
+	},
+	"dependencies": {
+		"@headlessui/vue": "^1.7.22",
+		"@nuxt/icon": "^1.2.1",
+		"@nuxt/ui": "^2.17.0",
+		"@nuxtjs/tailwindcss": "^6.12.1",
+		"@pinia/nuxt": "^0.5.2",
+		"nuxt": "^3.12.4",
+		"pinia": "^2.2.0",
+		"vue": "latest",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@iconify/json": "^2.2.230",
+		"@nuxtjs/color-mode": "^3.4.2",
+		"@tailwindcss/aspect-ratio": "^0.4.2",
+		"@tailwindcss/container-queries": "^0.1.1",
+		"@tailwindcss/forms": "^0.5.7",
+		"@tailwindcss/typography": "^0.5.13"
+	}
 }
