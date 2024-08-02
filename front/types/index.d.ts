@@ -23,7 +23,7 @@ declare global {
 
 	interface UserApiResponse {
 		status: boolean
-  		data?: any
+		data?: any
 	}
 
 	interface CookieOptions {

@@ -18,11 +18,11 @@ const validate = (state: any): FormError[] => {
 	return errors
 }
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
 async function onSubmit(event: FormSubmitEvent<any>) {
 	await userStore.signIn(event.data)
-	
+
 	await navigateTo('/profile')
 }
 </script>
