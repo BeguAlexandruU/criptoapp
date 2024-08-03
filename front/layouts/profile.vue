@@ -87,7 +87,7 @@ const footerLinks = [
 			</div>
 
 			<!-- sidebar container -->
-			<div class="flex flex-col flex-1 overflow-scroll">
+			<div class="flex flex-col flex-1 overflow-y-auto">
 				<UVerticalNavigation :links="links" />
 
 				<UDivider />
