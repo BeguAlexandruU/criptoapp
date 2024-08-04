@@ -106,7 +106,7 @@ const footerLinks = [
 		</DashboardSidebar>
 
 		<!-- content page -->
-		<div class="flex flex-col w-full h-screen">
+		<div class="flex flex-col w-full h-screen overflow-auto">
 			<slot />
 		</div>
 	</div>
