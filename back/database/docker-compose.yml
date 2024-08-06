@@ -3,7 +3,7 @@ services:
     db:
         image: mysql:5.7
         environment:
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: begu
             MYSQL_DATABASE: mydb
             MYSQL_USER: sandu
             MYSQL_PASSWORD: begu

@@ -25,13 +25,13 @@ CHECK_TABLES_SQL="SELECT COUNT(*) FROM information_schema.tables WHERE table_sch
 DROP_TABLES_SQL="SET FOREIGN_KEY_CHECKS = 0; SELECT CONCAT('DROP TABLE IF EXISTS \`', table_schema, '\`.\`', table_name, '\`;') FROM information_schema.tables WHERE table_schema = '${DB_NAME}'; SET FOREIGN_KEY_CHECKS = 1;"
 
 # Conectarea la baza de date și verificarea numărului de tabele
-TABLE_COUNT=$(docker-compose exec -T db mysql -u"${DB_USER}" -p"${DB_PASSWORD}" -h "${DB_HOST}" -P "${DB_PORT}" -se"${CHECK_TABLES_SQL}")
+TABLE_COUNT=$(docker compose exec -T db mysql -u"${DB_USER}" -p"${DB_PASSWORD}" -h "${DB_HOST}" -P "${DB_PORT}" -se"${CHECK_TABLES_SQL}")
 
 # Verifică dacă există tabele în baza de date
 if [ "$TABLE_COUNT" -gt 0 ]; then
   echo "Există $TABLE_COUNT tabele. Se începe ștergerea..."
   # Generarea și executarea comenzilor de ștergere a tabelului
-  docker-compose exec -T db mysql -u"${DB_USER}" -p"${DB_PASSWORD}" -h "${DB_HOST}" -P "${DB_PORT}" -se"${DROP_TABLES_SQL}" | docker-compose exec -T db mysql -u"${DB_USER}" -p"${DB_PASSWORD}" -h "${DB_HOST}" -P "${DB_PORT}" "${DB_NAME}"
+  docker compose exec -T db mysql -u"${DB_USER}" -p"${DB_PASSWORD}" -h "${DB_HOST}" -P "${DB_PORT}" -se"${DROP_TABLES_SQL}" | docker compose exec -T db mysql -u"${DB_USER}" -p"${DB_PASSWORD}" -h "${DB_HOST}" -P "${DB_PORT}" "${DB_NAME}"
   echo "Toate tabelele au fost șterse."
 else
   echo "Nu există tabele de șters."
