@@ -24,7 +24,7 @@ const items = computed(() => [
 			icon: 'i-heroicons-arrow-left-on-rectangle',
 			click: async () => {
 				userStore.logout()
-				navigateTo('/auth/login')
+				await navigateTo('/auth/login', { external: true })
 			},
 		},
 	],

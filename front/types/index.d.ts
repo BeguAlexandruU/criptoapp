@@ -21,6 +21,14 @@ declare global {
 		updated_at: Date
 	}
 
+	interface Wallet {
+		status: number
+		start_date: string
+		end_date: string
+		title: string
+		description: string
+	}
+
 	interface UserApiResponse {
 		status: boolean
 		data?: any

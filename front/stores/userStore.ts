@@ -5,7 +5,7 @@ export const useUserStore = defineStore('user', () => {
 	const user = ref()
 
 	const accessToken = useCookie('accessToken', {
-		maxAge: 60 * 60 * 24 * 1000,
+		maxAge: 60 * 60,
 	})
 
 	const setToken = (data?: string) => (accessToken.value = data)

@@ -76,7 +76,7 @@ app.include_router(notification_routes.router)
 app.include_router(post_routes.router, dependencies=[Depends(current_active_user)])
 app.include_router(product_routes.router)
 app.include_router(referal_routes.router)
-app.include_router(wallet_routes.router)
+app.include_router(wallet_routes.router, dependencies=[Depends(current_active_user)])
 
 #websocket routes
 app.include_router(ws_notifications.router)

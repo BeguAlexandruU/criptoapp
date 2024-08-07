@@ -40,7 +40,7 @@ class CrudBase:
         try:
             stmt = select(self.model).where(self.model.id == id)
             result = await db.execute(stmt)
-            db_obj = result.first()
+            db_obj = result.scalars().first()
             if db_obj is None:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
             return db_obj
@@ -56,7 +56,7 @@ class CrudBase:
             
             stmt = select(self.model).where(getattr(self.model, column) == value)
             result = await db.execute(stmt)
-            db_obj = result.first()
+            db_obj = result.scalars().all()
             if db_obj is None:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
             return db_obj
@@ -147,4 +147,12 @@ class CrudBase:
         except Exception as err:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))
         
-        
+    
+    async def read_custom(self, db: AsyncSession, query: str):
+        try:
+            
+            result = await db.execute(query)
+            db_obj = result.scalars().all()
+            return db_obj
+        except Exception as err:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(err))

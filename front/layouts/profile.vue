@@ -24,6 +24,12 @@ const links = [
 		icon: 'heroicons:newspaper',
 	},
 	{
+		id: 'wallet',
+		label: 'Wallet',
+		icon: 'i-heroicons-wallet',
+		to: '/profile/wallet',
+	},
+	{
 		id: 'products',
 		label: 'Products',
 		icon: 'heroicons:shopping-cart',
