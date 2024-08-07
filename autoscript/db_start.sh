@@ -11,4 +11,4 @@ PATH_ORIGIN=$(pwd)
 sudo systemctl start docker
 
 cd $PATH_DB
-docker-compose up -d
+docker compose up -d
