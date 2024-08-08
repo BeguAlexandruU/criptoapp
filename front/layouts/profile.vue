@@ -80,7 +80,13 @@ const footerLinks = [
 						}
 					"
 				/>
-				<UButton color="gray" variant="ghost" class="flex-1" to="/">
+				<UButton
+					color="gray"
+					variant="ghost"
+					class="flex-1"
+					to="/"
+					external
+				>
 					<UAvatar
 						src="https://avatars.githubusercontent.com/u/23360933?s=200&v=4"
 						size="2xs"

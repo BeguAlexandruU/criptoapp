@@ -58,9 +58,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 
 			<UFormGroup label="Password" name="password">
 				<template #hint>
-					<ULink
-						to="/auth/forgotpass"
-						class="text-primary font-medium"
+					<ULink to="/" class="text-primary font-medium"
 						>Forgot password?</ULink
 					>
 				</template>

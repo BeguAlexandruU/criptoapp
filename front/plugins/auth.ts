@@ -1,7 +1,7 @@
 export default defineNuxtPlugin(async nuxtApp => {
 	const userStore = useUserStore()
 
-	if (!userStore.user) {
+	if (!userStore.user && userStore.accessToken) {
 		await userStore.fetchUser()
 	}
 })

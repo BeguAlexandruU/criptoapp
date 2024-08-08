@@ -7,9 +7,10 @@
 		<UButton
 			icon="i-heroicons-home"
 			label="Home"
-			to="/"
 			color="black"
 			class="absolute top-4 rounded-full"
+			to="/"
+			external
 		/>
 
 		<slot />
