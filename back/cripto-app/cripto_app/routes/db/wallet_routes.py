@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
 from cripto_app.db.models import Product, Wallet
 from cripto_app.db.crud import CrudBase
@@ -42,7 +44,24 @@ async def get_by_id(item_id: int, db: DBD):
     return res
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
-async def create_entity(entity: WalletCreate, db: DBD):
+async def create_entity(entity: WalletCreate, db: DBD, user: UserRead = Depends(current_active_user)):
+
+    product = await CrudBase(Product).read(db, entity.id_product)
+
+    # Convert WalletCreate to a dictionary
+    entity_dict = entity.dict()
+    
+    # Add the new field
+    entity_dict['id'] = uuid.uuid4()
+    entity_dict['id_user'] = str(user.id)
+    entity_dict['start_date'] = datetime.now()
+    entity_dict['end_date'] = datetime.now() + timedelta(days=product.duration)
+
+    # Convert the dictionary to WalletBase
+    entity: WalletBase = WalletBase(**entity_dict)
+
+    print(entity.__dict__)
+
     res = await crud.create(db, entity)
     return res
 

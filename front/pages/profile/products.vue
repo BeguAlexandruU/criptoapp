@@ -12,10 +12,10 @@
 				<span class="text-gray-400">{{ item.description }}</span>
 				<UDivider />
 				<span class="text-gray-400 text-xs"
-					>Duration: {{ item.duration }}</span
+					>Duration: {{ item.duration }} days</span
 				>
 				<span class="text-3xl">{{ item.price }}$</span>
-				<UButton label="Buy now" />
+				<UButton label="Buy now" @click="buyProduct(item.id)" />
 			</div>
 		</div>
 	</div>
@@ -28,6 +28,7 @@ definePageMeta({
 	layout: 'profile',
 	middleware: ['auth-user'],
 })
+const toast = useToast()
 
 const { status, data: products } = await useFetch<Product[]>(
 	'/api/product/all',
@@ -35,4 +36,22 @@ const { status, data: products } = await useFetch<Product[]>(
 		lazy: true,
 	}
 )
+async function buyProduct(id: number | string) {
+	const userStore = useUserStore()
+	const res = await $fetch('/api/wallet/create', {
+		method: 'POST',
+		body: {
+			access_token: userStore.accessToken,
+			id_product: id,
+		},
+	})
+	if (res) {
+		toast.add({
+			title: 'Subscribtion completed',
+			description: 'You can check your subscrition in wallet',
+		})
+	} else {
+		alert(res)
+	}
+}
 </script>

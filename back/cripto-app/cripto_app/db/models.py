@@ -1,3 +1,4 @@
+import uuid
 from weakref import ref
 from sqlalchemy import Column, Float, Integer, String, DateTime, ForeignKey, MetaData
 from .base import Base
@@ -5,6 +6,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from uuid import uuid4
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID
+from fastapi_users_db_sqlalchemy.generics import GUID
 
 metadata = MetaData()
 
@@ -82,7 +84,7 @@ class Wallet(Base):
     __tablename__ = 'wallet'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     id_user = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_product = Column(Integer, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
     status = Column(Integer)

@@ -5,7 +5,6 @@
 		<!-- product list container -->
 		<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
 			<div
-				v-if="wallet"
 				v-for="item in wallet"
 				class="flex flex-col flex-1 gap-1 border-gray-800 border bg-gray-900 rounded-md px-4 py-5"
 			>
