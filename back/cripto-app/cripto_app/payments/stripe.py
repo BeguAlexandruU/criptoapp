@@ -16,4 +16,17 @@ class StripeClient:
 
     def retrieve_payment_intent(self, payment_intent_id):
         return stripe.PaymentIntent.retrieve(payment_intent_id)
+
+
+    def create_product(self, product_name, product_description):
+        return stripe.Product.create(name=product_name, description=product_description)
+    
+    def create_price(self, price_unit_amount, price_recurring_count, price_product_id):
+        
+        return stripe.Price.create(
+                    currency="usd",
+                    unit_amount=int(price_unit_amount*100),
+                    recurring={"interval": "day", "interval_count": price_recurring_count},
+                    product=price_product_id,
+                )
     

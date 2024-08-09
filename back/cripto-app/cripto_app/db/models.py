@@ -1,6 +1,6 @@
 import uuid
 from weakref import ref
-from sqlalchemy import Column, Float, Integer, String, DateTime, ForeignKey, MetaData
+from sqlalchemy import Boolean, Column, Float, Integer, String, DateTime, ForeignKey, MetaData
 from .base import Base
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -82,10 +82,12 @@ class Product(Base):
     metadata = metadata
 
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
+    id_stripe_product = Column(String(255), default='')
+    id_stripe_price = Column(String(255), default='')
     title = Column(String(64))
     description = Column(String(255))
     price = Column(Float)
-    status = Column(Integer)
+    isHidden = Column(Boolean)
     duration = Column(Integer)
 
     created_at = Column(DateTime, default=datetime.now)
