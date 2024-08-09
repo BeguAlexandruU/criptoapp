@@ -12,10 +12,12 @@ declare global {
 
 	interface Product {
 		id: string
+		id_stripe_product: string
+		id_stripe_price: string
 		title: string
 		description: string
 		price: number
-		status: number
+		isHidden: boolean
 		duration: number
 		created_at: Date
 		updated_at: Date

@@ -30,10 +30,10 @@ const links = [
 		to: '/profile/wallet',
 	},
 	{
-		id: 'products',
-		label: 'Products',
+		id: 'subscriptions',
+		label: 'Subscriptions',
 		icon: 'heroicons:shopping-cart',
-		to: '/profile/products',
+		to: '/profile/subscriptions',
 	},
 	{
 		id: 'referals',

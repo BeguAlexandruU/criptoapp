@@ -1,5 +1,5 @@
 <template>
-	<DashboardNavbar title="Products" v-model="isSidebarOpen" />
+	<DashboardNavbar title="Subscriptions" v-model="isSidebarOpen" />
 	<!-- page content container  -->
 	<div class="flex-1 p-4 overflow-y-auto">
 		<!-- product list container -->
