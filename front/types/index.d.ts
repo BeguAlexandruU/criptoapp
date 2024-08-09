@@ -1,7 +1,7 @@
 export { CookieOptions, Post }
 declare global {
 	interface Post {
-		id: number
+		id: string
 		title: string
 		description: string
 		type: string
@@ -11,7 +11,7 @@ declare global {
 	}
 
 	interface Product {
-		id: number
+		id: string
 		title: string
 		description: string
 		price: number

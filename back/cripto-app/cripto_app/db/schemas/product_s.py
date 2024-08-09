@@ -1,5 +1,4 @@
-from pydantic import BaseModel, Field
-from typing import Union
+from pydantic import UUID4, BaseModel, Field
 
 class ProductCreate(BaseModel):
     title       : str=Field(...,example="Product title")
@@ -9,7 +8,7 @@ class ProductCreate(BaseModel):
     duration    : int
 
 class ProductBase(BaseModel):
-    id: int
+    id: UUID4
     title       : str
     description : str
     price       : float

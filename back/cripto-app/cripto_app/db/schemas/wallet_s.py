@@ -1,18 +1,15 @@
-from typing import TypeVar
-from pydantic import BaseModel, Field
+from pydantic import UUID4, BaseModel, Field
 from datetime import datetime
 
-ID = TypeVar("ID")
-
 class WalletCreate(BaseModel):
-    id_user    : str
-    id_product : int
+    id_user    : str | UUID4
+    id_product : UUID4
     status     : int = Field(default=0)
 
 class WalletBase(BaseModel):
-    id        : ID
-    id_user   : str
-    id_product: int
+    id        : UUID4
+    id_user   : UUID4
+    id_product: UUID4
     status     : int
     start_date : datetime
     end_date   : datetime

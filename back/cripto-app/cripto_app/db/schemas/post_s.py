@@ -1,5 +1,4 @@
-from pydantic import BaseModel, Field
-from typing import Union
+from pydantic import UUID4, BaseModel, Field
 
 class PostCreate(BaseModel):
     title: str=Field(default="Title")
@@ -8,7 +7,7 @@ class PostCreate(BaseModel):
     status: int
 
 class PostBase(BaseModel):
-    id: int
+    id: UUID4
     title: str
     description: str
     type: str

@@ -1,7 +1,7 @@
 <template>
 	<DashboardNavbar title="Products" v-model="isSidebarOpen" />
 	<!-- page content container  -->
-	<div class="flex-1 p-4 overflow-scroll">
+	<div class="flex-1 p-4 overflow-y-auto">
 		<!-- product list container -->
 		<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
 			<div

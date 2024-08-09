@@ -27,33 +27,13 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     card = relationship("Card", back_populates="user")
     demo_order = relationship("DemoOrder", back_populates="user")
 
-class Admin(Base):
-    __tablename__ = 'admin'
-    metadata = metadata
-
-    id = Column(Integer, primary_key=True, index=True)
-    firstname = Column(String(30))
-    lastname = Column(String(30))
-    username = Column(String(30))
-    sold = Column(Integer, default=0)
-    password = Column(String(255))
-    token = Column(String(255), unique=True, default=str(uuid4()))
-    
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
-    #     self.token = str(uuid4())
-
-
-#notification posts
+#notification / posts
 class Notification(Base):
     __tablename__ = 'notification'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
-    id_user = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
+    id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
 
     title = Column(String(30))
     message = Column(String(255))
@@ -69,7 +49,7 @@ class Post(Base):
     __tablename__ = 'post'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     title = Column(String(30))
     description = Column(String(255))
     type = Column(String(30))
@@ -85,8 +65,8 @@ class Wallet(Base):
     metadata = metadata
 
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
-    id_user = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
-    id_product = Column(Integer, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
+    id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
+    id_product = Column(GUID, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
     status = Column(Integer)
     start_date = Column(DateTime, default=datetime.now)
     end_date = Column(DateTime, default=datetime.now)
@@ -101,7 +81,7 @@ class Product(Base):
     __tablename__ = 'product'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     title = Column(String(64))
     description = Column(String(255))
     price = Column(Float)
@@ -119,9 +99,9 @@ class Referal(Base):
     __tablename__ = 'referal'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
-    id_parent = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
-    id_child = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
+    id_parent = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
+    id_child = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
@@ -134,7 +114,7 @@ class Level(Base):
     __tablename__ = 'level'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     nr_level = Column(Integer)
     debit = Column(Integer)
     
@@ -146,8 +126,8 @@ class Card(Base):
     __tablename__ = 'card'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
-    id_user = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False)  
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
+    id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False)  
     sold = Column(Integer)
     nr_ref = Column(Integer)
 
@@ -160,8 +140,8 @@ class DemoOrder(Base):
     __tablename__ = 'demo_order'
     metadata = metadata
 
-    id = Column(Integer, primary_key=True, index=True)
-    id_user = Column(String(36), ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
+    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
+    id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     price = Column(Integer)
     order_type = Column(Integer)
     status = Column(Integer)

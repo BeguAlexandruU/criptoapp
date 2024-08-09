@@ -53,7 +53,7 @@ async def create_entity(entity: WalletCreate, db: DBD, user: UserRead = Depends(
     
     # Add the new field
     entity_dict['id'] = uuid.uuid4()
-    entity_dict['id_user'] = str(user.id)
+    entity_dict['id_user'] = user.id
     entity_dict['start_date'] = datetime.now()
     entity_dict['end_date'] = datetime.now() + timedelta(days=product.duration)
 
