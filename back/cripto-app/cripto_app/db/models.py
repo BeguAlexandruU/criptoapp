@@ -67,6 +67,7 @@ class Wallet(Base):
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_product = Column(GUID, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
+    id_stripe_subscription = Column(String(255), default='')
     status = Column(Integer)
     start_date = Column(DateTime, default=datetime.now)
     end_date = Column(DateTime, default=datetime.now)

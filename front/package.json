@@ -16,8 +16,10 @@
 		"@nuxt/ui": "^2.17.0",
 		"@nuxtjs/tailwindcss": "^6.12.1",
 		"@pinia/nuxt": "^0.5.2",
+		"@stripe/stripe-js": "^4.2.0",
 		"nuxt": "^3.12.4",
 		"pinia": "^2.2.0",
+		"stripe": "^16.7.0",
 		"vue": "latest",
 		"zod": "^3.23.8"
 	},

@@ -60,8 +60,6 @@ async def create_entity(entity: WalletCreate, db: DBD, user: UserRead = Depends(
     # Convert the dictionary to WalletBase
     entity: WalletBase = WalletBase(**entity_dict)
 
-    print(entity.__dict__)
-
     res = await crud.create(db, entity)
     return res
 

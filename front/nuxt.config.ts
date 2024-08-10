@@ -7,13 +7,9 @@ export default defineNuxtConfig({
 		storesDirs: ['./stores/**', './custom-folder/stores/**'],
 	},
 	css: ['~/assets/css/tailwind.css'],
-	// tailwindcss: {
-	// 	cssPath: ['~/assets/css/tailwind.css', { injectPosition: 'last' }],
-	// 	configPath: 'tailwind.config.js',
-	// 	exposeConfig: {
-	// 		level: 2,
-	// 	},
-	// 	config: {},
-	// 	viewer: true,
-	// },
+	runtimeConfig: {
+		secret: {
+			STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+		},
+	},
 })
