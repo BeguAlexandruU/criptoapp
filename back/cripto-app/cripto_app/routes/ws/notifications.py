@@ -4,6 +4,7 @@ from cripto_app.db.crud import CrudBase
 from cripto_app.db.database import get_db
 from typing import Annotated, List
 from sqlalchemy.orm import Session
+from cripto_app.ws.ws import WSManager
 
 DBD = Annotated[Session, Depends(get_db)]
 
@@ -17,10 +18,12 @@ crud = CrudBase(Notification)
 
 @router.websocket("/ws")
 async def websocket_notify(websocket: WebSocket):
-    await websocket.accept()
+    await WSManager.connect(websocket, "e5trhfgngrwe4t5rtfbggewret")
+
     try:
         while True:
-            data = await websocket.receive_text()
-            await websocket.send_text(f"Message text was: {data}")
+            
+            await WSManager.receive(websocket)
+            # await websocket.send_text(f"Message text was: {data}")
     except WebSocketDisconnect:
         await websocket.close()

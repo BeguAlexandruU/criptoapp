@@ -52,7 +52,7 @@ class ConnectionManagerWS:
 
     # Send a retry message to a user WebSocket
     async def broadcast(
-        self, channel_id: str, message: str, sender: str, not_send: WebSocket
+        self, channel_id: str, message: str, sender: str
     ):
         connections = self.active_connections
         if connections.get(channel_id):
@@ -60,8 +60,8 @@ class ConnectionManagerWS:
 
             for ws in ws_channel:
                 ws: WebSocket = ws
-                if ws != not_send:
-                    await ws.send_json(
+                # if ws != not_send:
+                await ws.send_json(
                         {
                             "message": message,
                             "sender": sender,
@@ -75,7 +75,10 @@ class ConnectionManagerWS:
                 "sender": "you",
             }
         )
+    
+    async def receive(self, websocket: WebSocket):
+        # data = await websocket.receive_text()
+        return await websocket.receive_text()
+    
 
-
-
-WsManager = ConnectionManagerWS()
+WSManager = ConnectionManagerWS()
