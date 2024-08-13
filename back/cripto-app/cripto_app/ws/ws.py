@@ -1,24 +1,13 @@
 from typing import Dict, List
-
 from fastapi import WebSocket
-
-# from services.service_utils.auth_utils import ws_access_token
+from starlette.websockets import WebSocketState
 
 CONNECTIONS = {}
 
 class ConnectionManagerWS:
-    # INITIALIZE THE LIST AND CONNECTION
-
     def __init__(self):
-        """example:
-        [{
-        "channel_id":[Websocket]
-        0370643958
-        }]
-        """
         self.active_connections: Dict[str, List[WebSocket]] = CONNECTIONS
 
-    # CONNECT TO WEBSOCKET AND APPEND TO THE LIST
     async def connect(self, websocket: WebSocket, channel_id: str):
         await websocket.accept()
         
@@ -29,56 +18,45 @@ class ConnectionManagerWS:
             connections[channel_id] = [websocket]
 
         count = self.connection_count(channel_id=channel_id)
+        await self.send_connection_count(channel_id, count)
 
-        ws_channel = connections[channel_id]
-        for ws in ws_channel:
-            ws: WebSocket = ws
-            await ws.send_json({"connection_count": count})
-
-    # PURGE WEBSOCKET LIST STORE
     async def disconnect(self, channel_id: str, websocket: WebSocket):
         if self.active_connections.get(channel_id):
             self.active_connections[channel_id].remove(websocket)
             count = self.connection_count(channel_id=channel_id)
-            ws_channel = self.active_connections[channel_id]
-            for ws in ws_channel:
-                ws: WebSocket = ws
-                await ws.send_json({"connection_count": count})
+            await self.send_connection_count(channel_id, count)
 
     def connection_count(self, channel_id: str):
         connection = self.active_connections
         if connection.get(channel_id):
             return len(connection[channel_id])
+        return 0
 
-    # Send a retry message to a user WebSocket
-    async def broadcast(
-        self, channel_id: str, message: str, sender: str
-    ):
+    async def send_connection_count(self, channel_id: str, count: int):
         connections = self.active_connections
         if connections.get(channel_id):
             ws_channel = connections[channel_id]
-
             for ws in ws_channel:
-                ws: WebSocket = ws
-                # if ws != not_send:
-                await ws.send_json(
-                        {
-                            "message": message,
-                            "sender": sender,
-                        }
-                    )
+                if ws.application_state == WebSocketState.CONNECTED:
+                    await ws.send_json({"connection_count": count})
+
+    async def broadcast(self, channel_id: str, message: str, sender: str):
+        connections = self.active_connections
+        if connections.get(channel_id):
+            ws_channel = connections[channel_id]
+            for ws in ws_channel:
+                if ws.application_state == WebSocketState.CONNECTED:
+                    await ws.send_json({"message": message, "sender": sender})
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
-        await websocket.send_json(
-            {
-                "message": message,
-                "sender": "you",
-            }
-        )
-    
+        if websocket.application_state == WebSocketState.CONNECTED:
+            await websocket.send_json({"message": message, "sender": "you"})
+
     async def receive(self, websocket: WebSocket):
-        # data = await websocket.receive_text()
-        return await websocket.receive_text()
-    
+        data = await websocket.receive_text()
+        # await self.send_personal_message("success", websocket)
+        # await self.send_personal_message(data, websocket)
+        return data
+        
 
 WSManager = ConnectionManagerWS()

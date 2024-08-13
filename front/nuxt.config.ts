@@ -12,4 +12,8 @@ export default defineNuxtConfig({
 			STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 		},
 	},
+
+	devServer: {
+		port: 3000,
+	},
 })
