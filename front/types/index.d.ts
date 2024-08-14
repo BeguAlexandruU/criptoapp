@@ -6,8 +6,6 @@ declare global {
 		description: string
 		type: string
 		status: number
-		created_at: Date
-		updated_at: Date
 	}
 
 	interface Product {

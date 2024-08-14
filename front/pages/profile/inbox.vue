@@ -4,15 +4,15 @@
 	<div>
 		<h1>Inbox</h1>
 		<ul>
-			<li v-for="(message, index) in data" :key="index">
-				{{ message }}
+			<li v-for="obj in data">
+				{{ obj.title }}
 			</li>
 		</ul>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 const { isSidebarOpen } = useDashboard()
 
 definePageMeta({
@@ -21,19 +21,17 @@ definePageMeta({
 	middleware: ['auth-user'],
 })
 
-const data = ref<string[]>([])
-const socket = new WebSocket('ws://localhost:5001/notify/ws')
+const data = ref<Post[]>([])
 onMounted(() => {
+	const socket = new WebSocket('ws://localhost:5001/ws/post')
 	socket.addEventListener('open', event => {
 		console.log('Connected to WS Server')
 	})
 
 	socket.addEventListener('message', event => {
-		console.log('Message from WS Server', event.data)
-		data.value.push(event.data)
+		console.log(JSON.parse(event.data))
+		data.value.push(JSON.parse(event.data))
 	})
-
-	// Send message to WS Server
 
 	socket.addEventListener('error', error => {
 		console.log('Error: ', error)

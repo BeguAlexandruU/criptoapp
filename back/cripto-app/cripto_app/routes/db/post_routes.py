@@ -6,6 +6,7 @@ from cripto_app.db.database import get_db
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 from cripto_app.ws.ws import WSManager
+from fastapi.responses import StreamingResponse
 
 DBD = Annotated[Session, Depends(get_db)]
 
@@ -32,7 +33,12 @@ async def get_by_id(item_id: int, db: DBD):
 @router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_post(entity: PostCreate, db: DBD):
     res = await crud.create(db, entity)
-    await WSManager.broadcast("e5trhfgngrwe4t5rtfbggewret", str(entity), "back_end")
+    await WSManager.broadcast("ssssss", {"title": entity.title,
+                            "description": entity.description, 
+                            "type": entity.type, 
+                            "status": entity.status
+                            }, 
+                            "back_end")
     return res
 
 @router.put("/update", status_code=status.HTTP_200_OK)
