@@ -23,7 +23,7 @@ definePageMeta({
 
 const data = ref<Post[]>([])
 onMounted(() => {
-	const socket = new WebSocket('ws://localhost:5001/ws/post')
+	const socket = new WebSocket('ws://localhost:5001/ws/notification')
 	socket.addEventListener('open', event => {
 		console.log('Connected to WS Server')
 	})
