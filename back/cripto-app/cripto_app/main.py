@@ -5,7 +5,7 @@ from cripto_app.routes.db import card_routes, demo_order_routes, level_routes, n
 from cripto_app.routes.ws import notifications as ws_notifications
 import fastapi_users
 from cripto_app.db.database import get_db
-from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user
+from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user, verify_jwt_token
 from cripto_app.db.auth.schemas import UserCreate, UserRead, UserUpdate
 from cripto_app.db.models import User
 from sqlalchemy.orm import Session
@@ -60,6 +60,13 @@ app.include_router(
     tags=["auth"],
     include_in_schema=True
 )
+
+# @app.get("/verify_token")
+# async def verify_token(token: str):
+    
+#     user = verify_jwt_token(token)
+#     print(user)
+#     return user
 
 @app.get("/auth/curent_user")
 def protected_route(user: UserRead = Depends(current_active_user)):

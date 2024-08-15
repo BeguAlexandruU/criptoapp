@@ -18,7 +18,8 @@ from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from cripto_app.db.crud import CrudBase
 from cripto_app.db.database import SessionLocal
 from cripto_app.db.schemas.referal_s import ReferalCreate
-
+from fastapi.security import HTTPBearer
+import jwt
 
 CrudReferal = CrudBase(Referal)
 CrudUser = CrudBase(User)
@@ -99,4 +100,21 @@ cookie_auth_backend = AuthenticationBackend(
 fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [jwt_auth_backend, cookie_auth_backend])
 
 current_active_user = fastapi_users.current_user(active=True)
+
+security = HTTPBearer()
+
+def verify_jwt_token(token: str):
+    try:
+        payload = jwt.decode(token, VERIFICATION_TOKEN_SECRET, algorithms=["HS256"], audience="fastapi-users:auth")
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=401,
+            detail="Token has expired"
+        )
+    except jwt.InvalidAudienceError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid audience"
+        )
     

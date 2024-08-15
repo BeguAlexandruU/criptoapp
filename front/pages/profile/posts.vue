@@ -57,7 +57,7 @@
 			</div>
 
 			<template #footer>
-				<Placeholder class="h-8" />
+				<!-- <Placeholder class="h-8" /> -->
 			</template>
 		</UCard>
 	</USlideover>
@@ -73,10 +73,14 @@ definePageMeta({
 const isSideoverOpen = ref(false)
 const sideoverPostId = ref(0)
 const posts = ref<Post[]>([])
+const userStore = useUserStore()
 onMounted(() => {
-	const socket = new WebSocket('ws://localhost:5001/ws/post')
+	const socket = new WebSocket(
+		'ws://localhost:5001/ws/post?token=' + userStore.accessToken
+	)
 	socket.addEventListener('open', event => {
 		console.log('Connected to WS Server')
+		socket.send('getPosts')
 	})
 
 	socket.addEventListener('message', event => {

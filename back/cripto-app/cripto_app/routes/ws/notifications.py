@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, HTTPException, Query, status, WebSocket, WebSocketDisconnect
 from cripto_app.db.models import Notification
 from cripto_app.db.crud import CrudBase
 from cripto_app.db.database import get_db
@@ -17,26 +17,24 @@ router = APIRouter(
 crud = CrudBase(Notification)
 
 @router.websocket("/notification")
-async def websocket_notify(websocket: WebSocket, db:DBD):
-    await WSManager.connect(websocket, "e5trhfgngrwe4t5rtfbggewret", "notification", db)
+async def websocket_notify(websocket: WebSocket, db:DBD, token: str = Query(...)):
+    if await WSManager.connect(websocket, "notification", db, token) == False:
+        return
 
     try:
         while True:
-            
-            await WSManager.receive(websocket)
-            # await websocket.send_text(f"Message text was: {data}")
+            await WSManager.receive(websocket,"notification",db,token)
     except WebSocketDisconnect:
         await websocket.close()
 
 @router.websocket("/post")
-async def websocket_notify(websocket: WebSocket, db:DBD):
-    await WSManager.connect(websocket, "ssssss", "post", db)
+async def websocket_notify(websocket: WebSocket, db:DBD, token: str = Query(...)):
+    if await WSManager.connect(websocket, "post", db, token) == False:
+        return
 
     try:
         while True:
-            
-            await WSManager.receive(websocket)
-            # await websocket.send_text(f"Message text was: {data}")
+            await WSManager.receive(websocket,"post",db,token)
     except WebSocketDisconnect:
         await websocket.close()
 

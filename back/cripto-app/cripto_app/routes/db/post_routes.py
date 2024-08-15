@@ -1,4 +1,5 @@
 from email import message
+from cripto_app.tasks.posts import task_broadcast_new_post
 from fastapi import APIRouter, Depends, HTTPException, status,BackgroundTasks
 from cripto_app.db.models import Post
 from cripto_app.db.crud import CrudBase
@@ -38,12 +39,14 @@ async def create_post(entity: PostCreate, bg_tasks: BackgroundTasks, db: DBD):
     bg_tasks.add_task(task_create_all_notifications, title=entity.title, message=entity.description, type_notification=entity.type)
     
     res = await crud.create(db, entity)
-    await WSManager.broadcast("ssssss", {"title": entity.title,
-                            "description": entity.description, 
-                            "type": entity.type, 
-                            "status": entity.status
-                            }, 
-                            "back_end")
+    await WSManager.broadcast({   
+            "title": entity.title,
+            "description": entity.description, 
+            "type": entity.type, 
+            "status": entity.status
+            }, 
+         "back_end"
+        )
     return res
 
 @router.put("/update", status_code=status.HTTP_200_OK)
