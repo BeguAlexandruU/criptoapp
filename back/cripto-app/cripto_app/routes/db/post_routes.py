@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from email import message
+from fastapi import APIRouter, Depends, HTTPException, status,BackgroundTasks
 from cripto_app.db.models import Post
 from cripto_app.db.crud import CrudBase
 from cripto_app.db.schemas.post_s import PostBase, PostCreate
@@ -7,6 +8,8 @@ from typing import Annotated, List
 from sqlalchemy.orm import Session
 from cripto_app.ws.ws import WSManager
 from fastapi.responses import StreamingResponse
+from cripto_app.tasks.notifications import task_create_all_notifications
+
 
 DBD = Annotated[Session, Depends(get_db)]
 
@@ -31,7 +34,9 @@ async def get_by_id(item_id: int, db: DBD):
     return res
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
-async def create_post(entity: PostCreate, db: DBD):
+async def create_post(entity: PostCreate, bg_tasks: BackgroundTasks, db: DBD):
+    bg_tasks.add_task(task_create_all_notifications, title=entity.title, message=entity.description, type_notification=entity.type)
+    
     res = await crud.create(db, entity)
     await WSManager.broadcast("ssssss", {"title": entity.title,
                             "description": entity.description, 
