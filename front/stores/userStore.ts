@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', () => {
 	// arrow function recommended for full type inference
 	const user = ref()
 	const posts = ref<Post[]>([])
+	const toast = useToast()
 
 	const accessToken = useCookie('accessToken', {
 		maxAge: 60 * 60,
@@ -13,7 +14,19 @@ export const useUserStore = defineStore('user', () => {
 	const socketUrl = ref()
 
 	const { open, close, send, status, data } = useWebSocket(
-		'ws://localhost:5001/ws/post?token=' + accessToken.value
+		'ws://localhost:5001/ws/post?token=' + accessToken.value,
+		{
+			onMessage: (ws, event) => {
+				console.log(event)
+				if (event.data) {
+					const parsedData = JSON.parse(event.data)
+					posts.value.push(parsedData)
+					if (accessToken.value) {
+						toast.add({ title: 'New Post' })
+					}
+				}
+			},
+		}
 	)
 
 	const setToken = (data?: string) => (accessToken.value = data)
@@ -70,43 +83,17 @@ export const useUserStore = defineStore('user', () => {
 		}
 	})
 
-	watch(data, newData => {
-		if (newData) {
-			const parsedData = JSON.parse(newData)
-			console.log(parsedData)
-			posts.value.push(parsedData)
-		}
-	})
-
 	const fetchPosts = async (data?: any) => {
 		try {
-			open()
-
-			// console.log('fetch posts')
-			// if (accessToken.value) {
-			// 	console.log('token exist')
-			// 	// setSocketUrl()
-			// 	setSocketUrl(accessToken.value)
-			// } else {
-			// 	console.error('Access token is null or undefined')
-			// 	return
-			// }
-
 			//get user fetch data
-			// const socket = new WebSocket(
-			// 	'ws://localhost:5001/ws/post?token=' + accessToken.value
-			// )
-			// socket.addEventListener('open', event => {
-			// 	console.log('Connected to WS Server')
-			// 	socket.send('getPosts')
-			// })
-			// socket.addEventListener('message', event => {
-			// 	console.log(JSON.parse(event.data))
-			// 	posts.value.push(JSON.parse(event.data))
-			// })
-			// socket.addEventListener('error', error => {
-			// 	console.log('Error: ', error)
-			// })
+			const res = await $fetch<any>('/api/posts', {
+				method: 'GET',
+				body: {
+					access_token: accessToken.value,
+				},
+			})
+			setPosts(res)
+			open()
 		} catch (error) {
 			setPosts([])
 			console.log(error)

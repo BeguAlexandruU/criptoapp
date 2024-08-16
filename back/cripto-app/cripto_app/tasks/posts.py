@@ -16,10 +16,6 @@ def task_broadcast_new_post(
   status: int
   ):
     try:
-      # users_crud = CrudBase(User)
-      # async with SessionLocal() as db:
-      #   all_users = await users_crud.read_all(db)
-      
       print(f"\nChanall Broadcasts: {WSManager.active_connections}")
       
       WSManager.broadcast(
@@ -31,8 +27,6 @@ def task_broadcast_new_post(
           }, 
           "back_end"
       )
-      # print(f"\nPost send to broadcast for user {user.id}")
-        
-      
+
     except Exception as err:
         raise HTTPException(status_code=404, detail=f"Internal error: {err}")

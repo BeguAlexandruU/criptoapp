@@ -75,27 +75,4 @@ const userStore = useUserStore()
 
 const isSideoverOpen = ref(false)
 const sideoverPostId = ref(0)
-
-// const posts = ref<Post[]>([])
-
-// onMounted(() => {})
-
-// onMounted(() => {
-// 	const socket = new WebSocket(
-// 		'ws://localhost:5001/ws/post?token=' + userStore.accessToken
-// 	)
-// 	socket.addEventListener('open', event => {
-// 		console.log('Connected to WS Server')
-// 		socket.send('getPosts')
-// 	})
-
-// 	socket.addEventListener('message', event => {
-// 		console.log(JSON.parse(event.data))
-// 		posts.value.push(JSON.parse(event.data))
-// 	})
-
-// 	socket.addEventListener('error', error => {
-// 		console.log('Error: ', error)
-// 	})
-// })
 </script>

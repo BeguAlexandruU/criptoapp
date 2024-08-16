@@ -89,29 +89,5 @@ class ConnectionManagerWS:
     async def receive(self, websocket: WebSocket,scope:str, db:DBD, token:str):
         data = await websocket.receive_text()
         
-        # match scope:
-        #     case "notification":
-        #         res = await CrudBase(Notification).read_all(db)
-        #         res_json = [{"title": ob.title,
-        #                     "message": ob.message, 
-        #                     "type": ob.type, 
-        #                     "status": ob.status
-        #                     } for ob in res]
-        #     case "post":
-        #         res = await CrudBase(Post).read_all(db)
-        #         res_json = [{"title": ob.title,
-        #                     "description": ob.description, 
-        #                     "type": ob.type, 
-        #                     "status": ob.status
-        #                     } for ob in res]
-        
-        # for obj in res_json:
-        #     if websocket.client_state == WebSocketState.CONNECTED:
-        #         await websocket.send_json(obj)
-        #     else:
-        #         break
-        
-        # return data
-        
 
 WSManager = ConnectionManagerWS()
