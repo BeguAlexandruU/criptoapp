@@ -69,13 +69,18 @@ class ConnectionManagerWS:
                     await ws.send_json({"connection_count": count})
 
     async def broadcast(self, message: dict, scope: str):
-        connections = self.active_connections
-        for channel_id, ws_channel in connections.items():
-            for ws in ws_channel:
-                if ws.client_state == WebSocketState.CONNECTED:
-                    await ws.send_json(message)
-                else:
-                    ws_channel.remove(ws)
+        try:
+            connections = self.active_connections
+            for channel_id, ws_channel in connections.items():
+                print(f"\nBroadcast send to {channel_id}")
+                for ws in ws_channel:
+                    if ws.client_state == WebSocketState.CONNECTED:
+                        await ws.send_json(message)
+                    else:
+                        ws_channel.remove(ws)
+            print(f"\nBroadcast send to all")
+        except Exception as err:
+            print(f"Error: {err}")
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         if websocket.application_state == WebSocketState.CONNECTED:
@@ -84,27 +89,27 @@ class ConnectionManagerWS:
     async def receive(self, websocket: WebSocket,scope:str, db:DBD, token:str):
         data = await websocket.receive_text()
         
-        match scope:
-            case "notification":
-                res = await CrudBase(Notification).read_all(db)
-                res_json = [{"title": ob.title,
-                            "message": ob.message, 
-                            "type": ob.type, 
-                            "status": ob.status
-                            } for ob in res]
-            case "post":
-                res = await CrudBase(Post).read_all(db)
-                res_json = [{"title": ob.title,
-                            "description": ob.description, 
-                            "type": ob.type, 
-                            "status": ob.status
-                            } for ob in res]
+        # match scope:
+        #     case "notification":
+        #         res = await CrudBase(Notification).read_all(db)
+        #         res_json = [{"title": ob.title,
+        #                     "message": ob.message, 
+        #                     "type": ob.type, 
+        #                     "status": ob.status
+        #                     } for ob in res]
+        #     case "post":
+        #         res = await CrudBase(Post).read_all(db)
+        #         res_json = [{"title": ob.title,
+        #                     "description": ob.description, 
+        #                     "type": ob.type, 
+        #                     "status": ob.status
+        #                     } for ob in res]
         
-        for obj in res_json:
-            if websocket.client_state == WebSocketState.CONNECTED:
-                await websocket.send_json(obj)
-            else:
-                break
+        # for obj in res_json:
+        #     if websocket.client_state == WebSocketState.CONNECTED:
+        #         await websocket.send_json(obj)
+        #     else:
+        #         break
         
         # return data
         

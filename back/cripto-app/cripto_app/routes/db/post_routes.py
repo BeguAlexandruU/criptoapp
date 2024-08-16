@@ -36,8 +36,6 @@ async def get_by_id(item_id: int, db: DBD):
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_post(entity: PostCreate, bg_tasks: BackgroundTasks, db: DBD):
-    bg_tasks.add_task(task_create_all_notifications, title=entity.title, message=entity.description, type_notification=entity.type)
-    
     res = await crud.create(db, entity)
     await WSManager.broadcast({   
             "title": entity.title,
@@ -47,6 +45,8 @@ async def create_post(entity: PostCreate, bg_tasks: BackgroundTasks, db: DBD):
             }, 
          "back_end"
         )
+    bg_tasks.add_task(task_create_all_notifications, title=entity.title, message=entity.description, type_notification=entity.type)
+    
     return res
 
 @router.put("/update", status_code=status.HTTP_200_OK)

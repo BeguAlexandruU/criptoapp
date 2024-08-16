@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 import asyncio
 
 
-async def task_broadcast_new_post(
+def task_broadcast_new_post(
   title: str, 
   message: str, 
   type_notification: str,
@@ -22,7 +22,7 @@ async def task_broadcast_new_post(
       
       print(f"\nChanall Broadcasts: {WSManager.active_connections}")
       
-      await WSManager.broadcast(
+      WSManager.broadcast(
           {
               "title": title,
               "description": message, 
