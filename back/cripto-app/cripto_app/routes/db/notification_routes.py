@@ -1,10 +1,13 @@
+from cripto_app.db.auth.schemas import UserRead
 from fastapi import APIRouter, Depends, HTTPException, status
 from cripto_app.db.models import Notification
 from cripto_app.db.crud import CrudBase
 from cripto_app.db.schemas.notification_s import NotificationBase, NotificationCreate
 from cripto_app.db.database import get_db
 from typing import Annotated, List
+from sqlalchemy import select
 from sqlalchemy.orm import Session
+from cripto_app.db.auth.users import current_active_user
 
 DBD = Annotated[Session, Depends(get_db)]
 
@@ -20,6 +23,17 @@ crud = CrudBase(Notification)
 async def get_all(db: DBD):
     res = await crud.read_all(db)
     return res
+
+@router.get("/user", status_code=status.HTTP_200_OK)
+async def get_by_user(db: DBD, user: UserRead = Depends(current_active_user)):
+
+    stmt = select(Notification.title, Notification.message, Notification.status, Notification.type).where(Notification.id_user == str(user.id))
+
+    result = await db.execute(stmt)
+
+    db_obj = result.mappings().all()
+
+    return db_obj
 
 @router.get("/{item_id}", status_code=status.HTTP_200_OK)
 async def get_by_id(item_id: int, db: DBD):

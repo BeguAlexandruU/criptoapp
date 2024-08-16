@@ -6,11 +6,11 @@
 		<!-- product list container -->
 		<div class="grid gap-4">
 			<div
-				v-for="item in userStore.posts"
+				v-for="item in postStore.posts"
 				class="flex flex-col flex-1 gap-1 border-gray-800 border bg-gray-900 rounded-md px-4 py-5"
 				@click="
 					() => {
-						sideoverPostId = userStore.posts.indexOf(item)
+						sideoverPostId = postStore.posts.indexOf(item)
 						isSideoverOpen = true
 					}
 				"
@@ -45,14 +45,14 @@
 
 				<div>
 					<span class="text-3xl font-semibold">{{
-						userStore.posts[sideoverPostId].title
+						postStore.posts[sideoverPostId].title
 					}}</span>
 				</div>
 			</template>
 
 			<div>
 				<span class="text-gray-400">{{
-					userStore.posts[sideoverPostId].description
+					postStore.posts[sideoverPostId].description
 				}}</span>
 			</div>
 
@@ -71,7 +71,7 @@ definePageMeta({
 })
 
 const { isSidebarOpen } = useDashboard()
-const userStore = useUserStore()
+const postStore = usePostStore()
 
 const isSideoverOpen = ref(false)
 const sideoverPostId = ref(0)

@@ -8,6 +8,14 @@ declare global {
 		status: number
 	}
 
+	interface Notification {
+		id: string
+		title: string
+		message: string
+		type: string
+		status: number
+	}
+
 	interface Product {
 		id: string
 		id_stripe_product: string

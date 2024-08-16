@@ -15,7 +15,7 @@ const links = [
 		label: 'Inbox',
 		icon: 'i-heroicons-inbox',
 		to: '/profile/inbox',
-		badge: '0',
+		badge: useNotificationStore().notifications.length,
 	},
 	{
 		id: 'posts',
