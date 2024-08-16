@@ -6,11 +6,11 @@
 		<!-- product list container -->
 		<div class="grid gap-4">
 			<div
-				v-for="item in posts"
+				v-for="item in userStore.posts"
 				class="flex flex-col flex-1 gap-1 border-gray-800 border bg-gray-900 rounded-md px-4 py-5"
 				@click="
 					() => {
-						sideoverPostId = posts.indexOf(item)
+						sideoverPostId = userStore.posts.indexOf(item)
 						isSideoverOpen = true
 					}
 				"
@@ -45,14 +45,14 @@
 
 				<div>
 					<span class="text-3xl font-semibold">{{
-						posts[sideoverPostId].title
+						userStore.posts[sideoverPostId].title
 					}}</span>
 				</div>
 			</template>
 
 			<div>
 				<span class="text-gray-400">{{
-					posts[sideoverPostId].description
+					userStore.posts[sideoverPostId].description
 				}}</span>
 			</div>
 
@@ -64,32 +64,38 @@
 </template>
 
 <script setup lang="ts">
-const { isSidebarOpen } = useDashboard()
 definePageMeta({
 	title: 'Posts',
 	layout: 'profile',
 	middleware: ['auth-user'],
 })
+
+const { isSidebarOpen } = useDashboard()
+const userStore = useUserStore()
+
 const isSideoverOpen = ref(false)
 const sideoverPostId = ref(0)
-const posts = ref<Post[]>([])
-const userStore = useUserStore()
-onMounted(() => {
-	const socket = new WebSocket(
-		'ws://localhost:5001/ws/post?token=' + userStore.accessToken
-	)
-	socket.addEventListener('open', event => {
-		console.log('Connected to WS Server')
-		socket.send('getPosts')
-	})
 
-	socket.addEventListener('message', event => {
-		console.log(JSON.parse(event.data))
-		posts.value.push(JSON.parse(event.data))
-	})
+// const posts = ref<Post[]>([])
 
-	socket.addEventListener('error', error => {
-		console.log('Error: ', error)
-	})
-})
+// onMounted(() => {})
+
+// onMounted(() => {
+// 	const socket = new WebSocket(
+// 		'ws://localhost:5001/ws/post?token=' + userStore.accessToken
+// 	)
+// 	socket.addEventListener('open', event => {
+// 		console.log('Connected to WS Server')
+// 		socket.send('getPosts')
+// 	})
+
+// 	socket.addEventListener('message', event => {
+// 		console.log(JSON.parse(event.data))
+// 		posts.value.push(JSON.parse(event.data))
+// 	})
+
+// 	socket.addEventListener('error', error => {
+// 		console.log('Error: ', error)
+// 	})
+// })
 </script>

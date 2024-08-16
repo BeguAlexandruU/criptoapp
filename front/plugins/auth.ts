@@ -3,5 +3,6 @@ export default defineNuxtPlugin(async nuxtApp => {
 
 	if (!userStore.user && userStore.accessToken) {
 		await userStore.fetchUser()
+		await userStore.fetchPosts()
 	}
 })
