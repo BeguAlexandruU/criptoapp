@@ -2,7 +2,7 @@ from typing import Annotated
 from cripto_app.settings import ORIGINS
 from fastapi import Depends, FastAPI
 from cripto_app.routes.db import card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, wallet_routes
-from cripto_app.routes.ws import notifications as ws_notifications
+from cripto_app.routes.ws import ws_routes
 import fastapi_users
 from cripto_app.db.database import get_db
 from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user, verify_jwt_token
@@ -79,11 +79,11 @@ app.include_router(card_routes.router)
 app.include_router(demo_order_routes.router)
 app.include_router(level_routes.router)
 app.include_router(notification_routes.router, dependencies=[Depends(current_active_user)])
-app.include_router(post_routes.router)
+app.include_router(post_routes.router, dependencies=[Depends(current_active_user)])
 app.include_router(product_routes.router)
 app.include_router(referal_routes.router)
 app.include_router(wallet_routes.router, dependencies=[Depends(current_active_user)])
 
 #websocket routes
-app.include_router(ws_notifications.router)
+app.include_router(ws_routes.router)
 

@@ -13,7 +13,8 @@ def task_broadcast_new_post(
   title: str, 
   message: str, 
   type_notification: str,
-  status: int
+  status: int,
+  created_at: str
   ):
     try:
       print(f"\nChanall Broadcasts: {WSManager.active_connections}")
@@ -23,7 +24,8 @@ def task_broadcast_new_post(
               "title": title,
               "description": message, 
               "type": type_notification, 
-              "status": status
+              "status": status,
+              "created_at": str
           }, 
           "back_end"
       )

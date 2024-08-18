@@ -1,4 +1,5 @@
 from email import message
+from cripto_app.db.auth.schemas import UserRead
 from cripto_app.tasks.posts import task_broadcast_new_post
 from fastapi import APIRouter, Depends, HTTPException, status,BackgroundTasks
 from cripto_app.db.models import Post
@@ -6,11 +7,12 @@ from cripto_app.db.crud import CrudBase
 from cripto_app.db.schemas.post_s import PostBase, PostCreate
 from cripto_app.db.database import get_db
 from typing import Annotated, List
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 from cripto_app.ws.ws import WSManager
 from fastapi.responses import StreamingResponse
 from cripto_app.tasks.notifications import task_create_all_notifications
-
+from cripto_app.db.auth.users import current_active_user
 
 DBD = Annotated[Session, Depends(get_db)]
 
@@ -27,6 +29,18 @@ async def get_all(db: DBD):
     res = await crud.read_all(db)
     return res
 
+@router.get("/user", status_code=status.HTTP_200_OK)
+async def get_by_user(db: DBD, user: UserRead = Depends(current_active_user)):
+
+    stmt = select(Post.title, Post.description, Post.status, Post.type, Post.created_at)
+
+    result = await db.execute(stmt)
+
+    db_obj = result.mappings().all()
+
+    return db_obj
+
+
 @router.get("/{item_id}", status_code=status.HTTP_200_OK)
 async def get_by_id(item_id: int, db: DBD):
     res = await crud.read(db, item_id)
@@ -41,7 +55,8 @@ async def create_post(entity: PostCreate, bg_tasks: BackgroundTasks, db: DBD):
             "title": entity.title,
             "description": entity.description, 
             "type": entity.type, 
-            "status": entity.status
+            "status": entity.status,
+            "created_at": entity.created_at
             }, 
          "back_end"
         )

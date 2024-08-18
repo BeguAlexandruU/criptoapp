@@ -26,8 +26,8 @@ export const usePostStore = defineStore('post', () => {
 	const fetchPosts = async () => {
 		try {
 			//get user fetch data
-			const res = await $fetch<any>('/api/posts', {
-				method: 'GET',
+			const res = await $fetch<any>('/api/post/get_by_user', {
+				method: 'POST',
 				body: {
 					access_token: useUserStore().accessToken,
 				},

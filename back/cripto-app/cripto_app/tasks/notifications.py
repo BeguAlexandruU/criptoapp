@@ -6,7 +6,6 @@ from cripto_app.db.models import Notification, User
 from cripto_app.db.schemas.notification_s import NotificationCreate
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
-import asyncio
 
 async def create_notification(entity: NotificationCreate):
     try:

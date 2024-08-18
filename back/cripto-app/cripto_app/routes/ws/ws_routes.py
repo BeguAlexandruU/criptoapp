@@ -10,7 +10,7 @@ DBD = Annotated[Session, Depends(get_db)]
 
 router = APIRouter(
     prefix="/ws",
-    tags=["ws_notifications"],
+    tags=["ws_routes"],
     responses={404: {"description": "Not found"}},
 )
 

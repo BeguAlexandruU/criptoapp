@@ -6,6 +6,7 @@ declare global {
 		description: string
 		type: string
 		status: number
+		created_at: string
 	}
 
 	interface Notification {
@@ -14,6 +15,7 @@ declare global {
 		message: string
 		type: string
 		status: number
+		created_at: string
 	}
 
 	interface Product {
