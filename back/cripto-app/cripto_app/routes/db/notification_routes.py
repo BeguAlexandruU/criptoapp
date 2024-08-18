@@ -27,7 +27,7 @@ async def get_all(db: DBD):
 @router.get("/user", status_code=status.HTTP_200_OK)
 async def get_by_user(db: DBD, user: UserRead = Depends(current_active_user)):
 
-    stmt = select(Notification.title, Notification.message, Notification.status, Notification.type, Notification.created_at).where(Notification.id_user == str(user.id))
+    stmt = select(Notification.title, Notification.message, Notification.status, Notification.type, Notification.created_at).where(Notification.id_user == str(user.id)).order_by(Notification.created_at)
 
     result = await db.execute(stmt)
 

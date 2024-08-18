@@ -25,7 +25,7 @@ def task_broadcast_new_post(
               "description": message, 
               "type": type_notification, 
               "status": status,
-              "created_at": str
+              "created_at": created_at
           }, 
           "back_end"
       )

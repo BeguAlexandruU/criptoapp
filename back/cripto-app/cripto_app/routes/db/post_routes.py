@@ -1,3 +1,4 @@
+from datetime import datetime
 from email import message
 from cripto_app.db.auth.schemas import UserRead
 from cripto_app.tasks.posts import task_broadcast_new_post
@@ -32,7 +33,7 @@ async def get_all(db: DBD):
 @router.get("/user", status_code=status.HTTP_200_OK)
 async def get_by_user(db: DBD, user: UserRead = Depends(current_active_user)):
 
-    stmt = select(Post.title, Post.description, Post.status, Post.type, Post.created_at)
+    stmt = select(Post.title, Post.description, Post.status, Post.type, Post.created_at).order_by(Post.created_at)
 
     result = await db.execute(stmt)
 
@@ -56,7 +57,7 @@ async def create_post(entity: PostCreate, bg_tasks: BackgroundTasks, db: DBD):
             "description": entity.description, 
             "type": entity.type, 
             "status": entity.status,
-            "created_at": entity.created_at
+            "created_at": str(datetime.now())
             }, 
          "back_end"
         )

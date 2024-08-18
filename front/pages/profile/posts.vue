@@ -4,7 +4,7 @@
 	<!-- page content container  -->
 	<div class="flex-1 p-4 overflow-y-auto">
 		<!-- product list container -->
-		<div class="grid gap-4">
+		<div class="flex flex-col-reverse gap-4">
 			<div
 				v-for="item in postStore.posts"
 				class="flex flex-col flex-1 gap-1 border-gray-800 border bg-gray-900 rounded-md px-4 py-5"
@@ -17,6 +17,8 @@
 			>
 				<span class="text-3xl font-semibold">{{ item.title }}</span>
 				<span class="text-gray-400">{{ item.description }}</span>
+				<span class="text-gray-400">{{ getItemHour(item) }}</span>
+				<span class="text-gray-400">{{ getItemDate(item) }}</span>
 			</div>
 		</div>
 	</div>
@@ -75,4 +77,28 @@ const postStore = usePostStore()
 
 const isSideoverOpen = ref(false)
 const sideoverPostId = ref(0)
+
+const getItemHour = item => {
+	let date = new Date(item.created_at)
+	return date.getHours() + ':' + date.getMinutes()
+}
+const getItemDate = item => {
+	const month = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	]
+
+	let date = new Date(item.created_at)
+	return date.getDate() + ' ' + month[date.getMonth()]
+}
 </script>
