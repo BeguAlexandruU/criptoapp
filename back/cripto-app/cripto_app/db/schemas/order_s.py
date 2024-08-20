@@ -1,13 +1,23 @@
 from pydantic import UUID4, BaseModel
 
-class DemoOrderCreate(BaseModel):
+class OrderCreate(BaseModel):
     id_user   : UUID4
-    price     : int 
-    order_type: int
+    id_product: UUID4
+    status    : str 
+    type      : str 
+    amount    : str 
+    currency  : str 
+    payment_amount: str 
+    payer_currency: str
 
-class DemoOrderBase(BaseModel):
+class OrderBase(BaseModel):
     id     : UUID4
     id_user   : UUID4
-    price     : int 
-    order_type: int
+    id_product: UUID4
+    status    : str 
+    type      : str 
+    amount    : str 
+    currency  : str 
+    payment_amount: str 
+    payer_currency: str
     

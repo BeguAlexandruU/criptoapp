@@ -1,7 +1,7 @@
 from typing import Annotated
 from cripto_app.settings import ORIGINS
 from fastapi import Depends, FastAPI
-from cripto_app.routes.db import card_routes, demo_order_routes, level_routes, notification_routes, post_routes, product_routes, referal_routes, wallet_routes
+from cripto_app.routes.db import level_routes, notification_routes, order_routes, post_routes, product_routes, referal_routes, wallet_routes
 from cripto_app.routes.ws import ws_routes
 import fastapi_users
 from cripto_app.db.database import get_db
@@ -75,8 +75,7 @@ def protected_route(user: UserRead = Depends(current_active_user)):
 #stripe routes
 # app.include_router(stripe_routes.router)
 
-app.include_router(card_routes.router)
-app.include_router(demo_order_routes.router)
+app.include_router(order_routes.router)
 app.include_router(level_routes.router)
 app.include_router(notification_routes.router, dependencies=[Depends(current_active_user)])
 app.include_router(post_routes.router, dependencies=[Depends(current_active_user)])

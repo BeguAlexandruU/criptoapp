@@ -24,8 +24,7 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
 
     notification = relationship("Notification", back_populates="user")
     wallet = relationship("Wallet", back_populates="user")
-    card = relationship("Card", back_populates="user")
-    demo_order = relationship("DemoOrder", back_populates="user")
+    order = relationship("Order", back_populates="user")
 
 #notification / posts
 class Notification(Base):
@@ -67,6 +66,7 @@ class Wallet(Base):
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_product = Column(GUID, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
+    id_order = Column(GUID, ForeignKey('order.id', ondelete= 'CASCADE'), nullable=False) 
     # id_stripe_subscription = Column(String(255), default='')
     status = Column(Integer)
     start_date = Column(DateTime, default=datetime.now)
@@ -77,6 +77,7 @@ class Wallet(Base):
 
     user = relationship("User", back_populates="wallet")
     product = relationship("Product", back_populates="wallet")
+    order = relationship("Order", back_populates="wallet")
 
 class Product(Base):
     __tablename__ = 'product'
@@ -95,6 +96,7 @@ class Product(Base):
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     wallet = relationship("Wallet", back_populates="product")
+    order = relationship("Order", back_populates="product")
 
 
 #referal section
@@ -124,33 +126,24 @@ class Level(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-#card (in dev section)
-class Card(Base):
-    __tablename__ = 'card'
-    metadata = metadata
-
-    id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
-    id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False)  
-    sold = Column(Integer)
-    nr_ref = Column(Integer)
-
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    
-    user = relationship("User", back_populates="card")
-
-class DemoOrder(Base):
-    __tablename__ = 'demo_order'
+class Order(Base):
+    __tablename__ = 'order'
     metadata = metadata
 
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
-    price = Column(Integer)
-    order_type = Column(Integer)
-    status = Column(Integer)
+    id_product = Column(GUID, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
+    status = Column(String(255), default='')
+    type = Column(String(255), default='')
+    amount = Column(String(255), default='')
+    currency = Column(String(255), default='')
+    payment_amount = Column(String(255), default='')
+    payer_currency = Column(String(255), default='')
 
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    user = relationship("User", back_populates="demo_order")
+    user = relationship("User", back_populates="order")
+    product = relationship("Product", back_populates="order")
+    wallet = relationship("Wallet", back_populates="order")
 

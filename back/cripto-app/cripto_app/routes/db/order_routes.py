@@ -1,20 +1,20 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from cripto_app.db.models import DemoOrder
+from cripto_app.db.models import Order
 from cripto_app.db.crud import CrudBase
-from cripto_app.db.schemas.demo_order_s import DemoOrderBase, DemoOrderCreate
+from cripto_app.db.schemas.order_s import OrderBase, OrderCreate
 from cripto_app.db.database import get_db
-from typing import Annotated, List
+from typing import Annotated
 from sqlalchemy.orm import Session
 
 DBD = Annotated[Session, Depends(get_db)]
 
 router = APIRouter(
-    prefix="/demo_order",
-    tags=["demo_order"],
+    prefix="/order",
+    tags=["order"],
     responses={404: {"description": "Not found"}},
 )
 
-crud = CrudBase(DemoOrder)
+crud = CrudBase(Order)
 
 @router.get("/all", status_code=status.HTTP_200_OK)
 async def get_all(db: DBD):
@@ -29,12 +29,12 @@ async def get_by_id(item_id: int, db: DBD):
     return res
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
-async def create_entity(entity: DemoOrderCreate, db: DBD):
+async def create_entity(entity: OrderCreate, db: DBD):
     res = await crud.create(db, entity)
     return res
 
 @router.put("/update", status_code=status.HTTP_200_OK)
-async def update_entity(entity: DemoOrderBase, db: DBD):
+async def update_entity(entity: OrderBase, db: DBD):
     existing_item = await crud.read(db, entity.id)
     if not existing_item:
         raise HTTPException(status_code=404, detail="Item not found")
