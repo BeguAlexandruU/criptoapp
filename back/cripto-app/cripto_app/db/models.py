@@ -17,7 +17,7 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     name = Column(String(60))
     ref_code = Column(String(255), unique=True, default=lambda: str(uuid4()))
     ref_code_parent = Column(String(255), default='')
-    id_stripe_customer = Column(String(255), default='')
+    # id_stripe_customer = Column(String(255), default='')
 
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
@@ -67,7 +67,7 @@ class Wallet(Base):
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_product = Column(GUID, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
-    id_stripe_subscription = Column(String(255), default='')
+    # id_stripe_subscription = Column(String(255), default='')
     status = Column(Integer)
     start_date = Column(DateTime, default=datetime.now)
     end_date = Column(DateTime, default=datetime.now)
@@ -83,8 +83,8 @@ class Product(Base):
     metadata = metadata
 
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
-    id_stripe_product = Column(String(255), default='')
-    id_stripe_price = Column(String(255), default='')
+    # id_stripe_product = Column(String(255), default='')
+    # id_stripe_price = Column(String(255), default='')
     title = Column(String(64))
     description = Column(String(255))
     price = Column(Float)

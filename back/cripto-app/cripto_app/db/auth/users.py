@@ -1,8 +1,8 @@
 
 from typing import Optional
 import uuid
-from cripto_app.payments.stripe import StripeClient
-from cripto_app.settings import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
+# from cripto_app.payments.stripe import StripeClient
+# from cripto_app.settings import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
 from cripto_app.settings import RESET_TOKEN_SECRET, VERIFICATION_TOKEN_SECRET
 from cripto_app.db.database import get_user_db
 from cripto_app.db.models import User, Referal
@@ -23,7 +23,7 @@ import jwt
 
 CrudReferal = CrudBase(Referal)
 CrudUser = CrudBase(User)
-Stripe = StripeClient(STRIPE_SECRET_KEY)
+# Stripe = StripeClient(STRIPE_SECRET_KEY)
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_token_secret = RESET_TOKEN_SECRET
@@ -34,10 +34,10 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
 
             async with SessionLocal() as db:
 
-                res = Stripe.create_customer(user.email, user.name)
+                # res = Stripe.create_customer(user.email, user.name)
 
-                if res :
-                    updated_user = await CrudUser.update_by_column(db, user.id, "id_stripe_customer", res.id)
+                # if res :
+                #     updated_user = await CrudUser.update_by_column(db, user.id, "id_stripe_customer", res.id)
 
                 if user.ref_code_parent != '' :
                     

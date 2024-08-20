@@ -1,4 +1,3 @@
-from typing import List
 from pydantic import BaseModel, EmailStr, Field
 
 class Customer(BaseModel):

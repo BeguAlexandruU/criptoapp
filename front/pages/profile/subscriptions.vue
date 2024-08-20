@@ -15,10 +15,7 @@
 					>Duration: {{ item.duration }} days</span
 				>
 				<span class="text-3xl">{{ item.price }}$</span>
-				<UButton
-					label="Buy now"
-					@click="buyProduct(item.id_stripe_price)"
-				/>
+				<UButton label="Buy now" @click="buyProduct(item.id)" />
 			</div>
 		</div>
 	</div>
@@ -41,21 +38,21 @@ const { status, data: products } = await useFetch<Product[]>(
 )
 async function buyProduct(id_price: string) {
 	const userStore = useUserStore()
-	const res = await $fetch('/api/stripe/checkout_session', {
-		method: 'POST',
-		body: {
-			id_customer: userStore.user.id_stripe_customer,
-			id_price: id_price,
-		},
-	})
-	if (res?.url) {
-		navigateTo(res.url, { external: true })
-	} else {
-		toast.add({
-			title: 'Error report',
-			description: 'Error creating checkout session',
-		})
-	}
+	// const res = await $fetch('/api/stripe/checkout_session', {
+	// 	method: 'POST',
+	// 	body: {
+	// 		id_customer: userStore.user.id_stripe_customer,
+	// 		id_price: id_price,
+	// 	},
+	// })
+	// if (res?.url) {
+	// 	navigateTo(res.url, { external: true })
+	// } else {
+	// 	toast.add({
+	// 		title: 'Error report',
+	// 		description: 'Error creating checkout session',
+	// 	})
+	// }
 	// const res = await $fetch('/api/wallet/create', {
 	// 	method: 'POST',
 	// 	body: {

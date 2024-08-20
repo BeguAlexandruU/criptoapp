@@ -20,8 +20,8 @@ declare global {
 
 	interface Product {
 		id: string
-		id_stripe_product: string
-		id_stripe_price: string
+		// id_stripe_product: string
+		// id_stripe_price: string
 		title: string
 		description: string
 		price: number
@@ -52,7 +52,7 @@ declare global {
 		is_verified: boolean
 
 		nume: string
-		id_stripe_customer: string
+		// id_stripe_customer: string
 		ref_code: string
 		ref_code_parent: string
 

@@ -34,16 +34,16 @@ async def get_by_id(item_id: int, db: DBD):
 @router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_entity(entity: ProductCreate, db: DBD):
 
-    product = Stripe.create_product(entity.title, entity.description)
-    if product is None:
-        raise HTTPException(status_code=404, detail="Error creating stripe product")
+    # product = Stripe.create_product(entity.title, entity.description)
+    # if product is None:
+    #     raise HTTPException(status_code=404, detail="Error creating stripe product")
     
-    price = Stripe.create_price(entity.price, entity.duration, product.id)
-    if price is None:
-        raise HTTPException(status_code=404, detail="Error creating stripe price")
+    # price = Stripe.create_price(entity.price, entity.duration, product.id)
+    # if price is None:
+    #     raise HTTPException(status_code=404, detail="Error creating stripe price")
     
-    entity.id_stripe_product = product.id
-    entity.id_stripe_price = price.id
+    # entity.id_stripe_product = product.id
+    # entity.id_stripe_price = price.id
 
     res = await crud.create(db, entity)
     return res

@@ -73,7 +73,7 @@ def protected_route(user: UserRead = Depends(current_active_user)):
     return user
 
 #stripe routes
-app.include_router(stripe_routes.router)
+# app.include_router(stripe_routes.router)
 
 app.include_router(card_routes.router)
 app.include_router(demo_order_routes.router)
