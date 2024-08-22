@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Așteaptă până când MySQL este gata
-echo "Verificarea disponibilității serverului MySQL la $MYSQL_HOST..."
-while ! mysqladmin ping -h"$MYSQL_HOST" --silent; do
-    echo "Așteptând ca MySQL să fie gata..."
-    sleep 2
-done
-echo "MySQL este gata. Continuarea inițializării."
+# # Așteaptă până când MySQL este gata
+# echo "Verificarea disponibilității serverului MySQL la $MYSQL_HOST..."
+# while ! mysqladmin ping -h"$MYSQL_HOST" --silent; do
+#     echo "Așteptând ca MySQL să fie gata..."
+#     sleep 2
+# done
+# echo "MySQL este gata. Continuarea inițializării."
 
 # Continuă cu scriptul existent
 cd cripto_app
