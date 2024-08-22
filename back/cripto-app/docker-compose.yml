@@ -4,7 +4,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: cripto-app
+
         volumes:
             - cripto_app:/code
         env_file:
