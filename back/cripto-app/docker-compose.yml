@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+    cripto-app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: cripto-app
+        volumes:
+            - cripto_app:/code
+        env_file:
+            - .env
+        environment:
+            TZ: 'Europe/Bucharest'
+        ports:
+            - '5001:5001'
+        command: ['/bin/bash', '-c', '/code/docker/cripto_app.sh']
+        links:
+            - db
+        depends_on:
+            - db
+
+    db:
+        image: mysql:5.7
+        env_file:
+            - .env
+        ports:
+            - '3307:3306'
+        volumes:
+            - db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            TZ: 'Europe/Bucharest'
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        env_file:
+            - .env
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            TZ: 'Europe/Bucharest'
+        ports:
+            - '8003:80'
+        links:
+            - db
+        depends_on:
+            - db
+
+volumes:
+    cripto_app:
+    db_data:
