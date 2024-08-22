@@ -11,6 +11,10 @@ export default defineNuxtConfig({
 		secret: {
 			STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 		},
+		public: {
+			PORT: process.env.PORT || 4000,
+			HOST: process.env.HOST || '0.0.0.0',
+		},
 	},
 
 	devServer: {
