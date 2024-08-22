@@ -1,27 +1,21 @@
-# Description: Fișierul de configurare pentru construirea imaginii Docker a aplicației front-end.
-FROM oven/bun:latest as build
+# Use the official Bun image as a base
+FROM oven/bun:latest
 
+# Set the working directory
 WORKDIR /app
 
+# Copy package files and install dependencies
 COPY package.json bun.lockb ./
-
 RUN bun install
 
+# Copy the rest of the application files
 COPY . .
 
-# Production build
+# Build the application
 RUN bun run build
 
-FROM oven/bun:latest as run
-
-WORKDIR /app
-
-COPY --from=build /app/.output /app/.output
-COPY --from=build /app/node_modules /app/node_modules
-COPY --from=build /app/.nuxt /app/.nuxt
-COPY --from=build /app/nuxt.config.ts /app/nuxt.config.ts
-COPY --from=build /app/package.json /app/package.json
-
+# Expose the application port
 EXPOSE 3000
 
-CMD ["bun", "run", "start"]
+# Command to run the application in production mode
+CMD ["node", ".output/server/index.mjs"]

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
     cripto-app:
-        image: cripto-app:latest
+        image: cripto-app:v1
         build:
             context: .
             dockerfile: Dockerfile
