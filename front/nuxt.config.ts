@@ -12,7 +12,7 @@ export default defineNuxtConfig({
 			STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 		},
 		public: {
-			PORT: process.env.PORT || 4000,
+			PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 4000,
 			HOST: process.env.HOST || '0.0.0.0',
 		},
 	},
