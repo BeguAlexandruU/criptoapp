@@ -108,4 +108,28 @@ https://drawsql.app/teams/indigital/diagrams/criptoapp
 2.   
     ```
     poetry run alembic history //the rest on alembic.com
+    
+    ```
+
+## Deploy production
+
+1. 
+    - Stop stack back-compose 
+    ```
+        cd ~/docker/composes/
+        docker compose -f back-compose.yml down
+    ```
+
+2. 
+    - Update image backend
+    ```
+        cd ~/app/criptoapp/
+        bash update_back_img.sh
+    ```
+
+3. 
+    - Stop stack back-compose 
+    ```
+        cd ~/docker/composes/
+        docker compose -f back-compose.yml up -d
     ```
