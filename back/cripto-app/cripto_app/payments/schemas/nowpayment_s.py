@@ -1,9 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import UUID4, BaseModel
 
-class Customer(BaseModel):
-    name: str = Field(..., max_length=60)
-    email: EmailStr
-
-class Subscription(BaseModel):
-    customer_id: str
-    price_id: str
+class InvoiceRequerements(BaseModel):
+    product_id: UUID4

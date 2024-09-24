@@ -36,8 +36,25 @@ const { status, data: products } = await useFetch<Product[]>(
 		lazy: true,
 	}
 )
-async function buyProduct(id_price: string) {
-	const userStore = useUserStore()
+async function buyProduct(id_product: string) {
+	// const userStore = useUserStore()
+
+	const res = await $fetch('/api/nowpayment/create_invoice', {
+		method: 'POST',
+		body: {
+			access_token: useUserStore().accessToken,
+			id_product: id_product,
+		},
+	})
+	if (res?.invoice_url) {
+		navigateTo(res.invoice_url, { external: true })
+	} else {
+		toast.add({
+			title: 'Error report',
+			description: 'Error creating checkout session',
+		})
+	}
+
 	// const res = await $fetch('/api/stripe/checkout_session', {
 	// 	method: 'POST',
 	// 	body: {

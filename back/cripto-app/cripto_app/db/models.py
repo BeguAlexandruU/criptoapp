@@ -133,7 +133,7 @@ class Order(Base):
     id = Column(GUID, primary_key=True, index=True, default=uuid.uuid4)
     id_user = Column(GUID, ForeignKey('user.id', ondelete= 'CASCADE'), nullable=False) 
     id_product = Column(GUID, ForeignKey('product.id', ondelete= 'CASCADE'), nullable=False) 
-    status = Column(String(255), default='')
+    status = Column(String(255), default='new')
     type = Column(String(255), default='')
     amount = Column(String(255), default='')
     currency = Column(String(255), default='')

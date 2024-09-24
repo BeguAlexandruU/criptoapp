@@ -76,7 +76,7 @@ def protected_route(user: UserRead = Depends(current_active_user)):
 # app.include_router(stripe_routes.router)
 
 #nowpayment routes
-app.include_router(nowpayment_routes.router)
+app.include_router(nowpayment_routes.router, dependencies=[Depends(current_active_user)])
 
 app.include_router(order_routes.router)
 app.include_router(level_routes.router)

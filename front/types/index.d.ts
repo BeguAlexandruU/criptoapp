@@ -70,4 +70,25 @@ declare global {
 	interface AccessTokenData {
 		access_token: string
 	}
+
+	interface InvoiceResponse {
+		id: string
+		token_id: string
+		order_id: string
+		order_description: string
+		price_amount: string
+		price_currency: string
+		pay_currency: string
+		ipn_callback_url: string
+		invoice_url: string
+		success_url: string
+		cancel_url: string
+		customer_email: string
+		partially_paid_url: string
+		payout_currency: string
+		created_at: string
+		updated_at: string
+		is_fixed_rate: boolean
+		is_fee_paid_by_user: boolean
+	}
 }
