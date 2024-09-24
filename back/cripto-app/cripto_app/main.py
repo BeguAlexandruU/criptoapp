@@ -6,10 +6,10 @@ from cripto_app.routes.ws import ws_routes
 import fastapi_users
 from cripto_app.db.database import get_db
 from cripto_app.db.auth.users import jwt_auth_backend, fastapi_users, current_active_user, verify_jwt_token
-from cripto_app.db.auth.schemas import UserCreate, UserRead, UserUpdate
+from cripto_app.db.auth.schemas import UserCreate, UserRead
 from cripto_app.db.models import User
 from sqlalchemy.orm import Session
-from cripto_app.routes.payments import stripe_routes
+from cripto_app.routes.payments import nowpayment_routes
 from fastapi.middleware.cors import CORSMiddleware
 import json
 
@@ -74,6 +74,9 @@ def protected_route(user: UserRead = Depends(current_active_user)):
 
 #stripe routes
 # app.include_router(stripe_routes.router)
+
+#nowpayment routes
+app.include_router(nowpayment_routes.router)
 
 app.include_router(order_routes.router)
 app.include_router(level_routes.router)

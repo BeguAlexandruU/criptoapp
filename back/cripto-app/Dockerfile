@@ -14,4 +14,4 @@ COPY  . /code
 COPY docker/cripto_app.sh /code/docker/
 RUN chmod +x /code/docker/cripto_app.sh
 
-RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
+RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi && pip install nowpayment
